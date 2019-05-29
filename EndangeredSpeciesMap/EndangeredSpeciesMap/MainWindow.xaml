@@ -9,7 +9,6 @@
     <DockPanel>
         <!-- Menu bar -->
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_Tags"></MenuItem>
             <MenuItem Header="_Help"></MenuItem>
             <MenuItem Header="_Tutorial"></MenuItem>
         </Menu>
@@ -17,7 +16,9 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-                <RowDefinition />
+                <RowDefinition Height="36" />
+                <RowDefinition Height="21*" />
+                <RowDefinition Height="4*"/>
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -27,14 +28,14 @@
 
             <!-- Search -->
             <TextBox x:Name="SearchParam" FontSize="18" Margin="10,10,35,5"/>
-            <Button Width="20"  Cursor="Hand" ToolTip="Search" Margin="170,10,10,5">
+            <Button  Cursor="Hand" ToolTip="Search" Margin="170,10,10,5">
                 <Button.Template>
                     <ControlTemplate>
                         <Image Source="/EndangeredSpeciesMap;component/Images/search.png"/>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            
+
             <!-- FIlter -->
             <ComboBox Grid.Column="0" Grid.Row="1" Margin="10,5,35,10">
                 <ComboBoxItem IsSelected="True">No filter</ComboBoxItem>
@@ -50,7 +51,7 @@
                 <ComboBoxItem>Habituated</ComboBoxItem>
             </ComboBox>
 
-            <Button Width="20"  Cursor="Hand" ToolTip="Filter" Margin="170,5,10,10" Grid.Row="1">
+            <Button  Cursor="Hand" ToolTip="Filter" Margin="170,5,10,10" Grid.Row="1">
                 <Button.Template>
                     <ControlTemplate>
                         <Image Source="/EndangeredSpeciesMap;component/Images/filter.png"/>
@@ -58,25 +59,81 @@
                 </Button.Template>
             </Button>
 
+            <CheckBox Grid.Column="0" Grid.Row="2" Margin="10,0,122,14">On map</CheckBox>
+
             <!-- List of species -->
-            <ListView Grid.Column="0" Grid.Row="2">
+            <ListView Grid.Column="0" Grid.Row="2" Margin="10,27,10,0" Grid.RowSpan="3">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel>
-                            
+
                         </WrapPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
             <!-- Add button -->
-            <Button Grid.Column="0" Grid.Row="3" Margin="53,5,53,10">Add Species</Button>
-            
-            <!-- Maps-->
-            <Button Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Background="Yellow">PET</Button>
+            <Button Grid.Column="0" Grid.Row="5" Margin="10,5,107,10" RenderTransformOrigin="0,0.48">Add Species</Button>
+            <Button Grid.Column="0" Grid.Row="5" Margin="106,5,10,10" RenderTransformOrigin="0,0.48">Add Tag</Button>
 
-            
-        
+            <!-- Maps-->
+            <Grid Grid.Column="1" Grid.Row="0"  Grid.RowSpan="5">
+                <TabControl Margin="0,0,10,-29">
+                    <TabItem Header="Map #1">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <Canvas Width="{Binding ActualWidth, ElementName=map1}" Height="{Binding ActualHeight, ElementName=map1}" >
+                                <Canvas.Background>
+                                    <VisualBrush  >
+                                        <VisualBrush.Visual>
+                                            <Image x:Name="map1" Source="/EndangeredSpeciesMap;component/Images/map.jpg"  />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Map #2">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <Canvas Width="{Binding ActualWidth, ElementName=map2}" Height="{Binding ActualHeight, ElementName=map2}" >
+                                <Canvas.Background>
+                                    <VisualBrush  >
+                                        <VisualBrush.Visual>
+                                            <Image x:Name="map" Source="/EndangeredSpeciesMap;component/Images/map.jpg"  />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Map #3">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <Canvas Width="{Binding ActualWidth, ElementName=map3}" Height="{Binding ActualHeight, ElementName=map3}" >
+                                <Canvas.Background>
+                                    <VisualBrush  >
+                                        <VisualBrush.Visual>
+                                            <Image x:Name="map3" Source="/EndangeredSpeciesMap;component/Images/map.jpg"  />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Map #4">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <Canvas Width="{Binding ActualWidth, ElementName=map4}" Height="{Binding ActualHeight, ElementName=map4}" >
+                                <Canvas.Background>
+                                    <VisualBrush  >
+                                        <VisualBrush.Visual>
+                                            <Image x:Name="map4" Source="/EndangeredSpeciesMap;component/Images/map.jpg"  />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+
+            </Grid >
         </Grid>
 
     </DockPanel>
