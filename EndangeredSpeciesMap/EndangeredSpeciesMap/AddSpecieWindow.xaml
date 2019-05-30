@@ -5,31 +5,102 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EndangeredSpeciesMap"
         mc:Ignorable="d"
-        Title="Endangered Species" Height="450" Width="800">
+        Title="Add new specie" MaxHeight="450" MaxWidth="800" ResizeMode="NoResize">
     <DockPanel>
         <!-- Menu bar -->
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_Help"></MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Tips" IsCheckable="True"></MenuItem>
+            </MenuItem>
             <MenuItem Header="_Tutorial"></MenuItem>
         </Menu>
         <Grid>
-            <Grid.RowDefinitions>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <!-- Form for adding new specie -->
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Label FontSize="16" Content="Add new specie" Margin="16,17,124,353"></Label>
-            <Image Margin="81,72,21,209" x:Name="imgPhoto" Stretch="Fill" Height="119" Source="/EndangeredSpeciesMap;component/Images/default.png"/>
-            <Button Height="23" Margin="128,210,78,168" x:Name="btnLoad" Content="_Browse"/>
+                <!-- First Column -->
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="204"></RowDefinition>
+                        <RowDefinition Height="39"></RowDefinition>
+                        <RowDefinition Height="245"></RowDefinition>
+                    </Grid.RowDefinitions>
 
+                    <Image Grid.Row="0" x:Name="imgPhoto" Stretch="Fill" Source="/EndangeredSpeciesMap;component/Images/picture.png" Margin="32,30,43,10"/>
+                    <Button Grid.Row="1" x:Name="btnLoad" Content="_Load Icon" Margin="84,0,98,10" RenderTransformOrigin="0.569,0.276"></Button>
 
-                <!--<Button Grid.Column="0" Background="Red">JEDAN</Button>-->
-            <Button Grid.Column="1" Background="Blue">DVA</Button>
-            <Button Grid.Column="2" Background="Green">TRI</Button>
+                    <Button Grid.Row="2" x:Name="btnBack" Margin="32,75,130,138" RenderTransformOrigin="0.569,0.276" Click="BtnBack_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/EndangeredSpeciesMap;component/Images/back.png" Width="30" Height="20" />
+                            <TextBlock Text="  Go back" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
 
+                <!-- Second Column -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="63"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="84"></RowDefinition>
+                        <RowDefinition Height="34"></RowDefinition>
+                        <RowDefinition Height="104"></RowDefinition>
+                        <RowDefinition Height="173"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="ID" Grid.Row="0" FontSize="14" Margin="0,33,48,6" RenderTransformOrigin="0.375,0.411"></TextBox>
+                    <TextBox x:Name="Name" Grid.Row="1" FontSize="14" Margin="0,0,48,0" Height="22" VerticalAlignment="Top"/>
+                    <TextBox x:Name="Description"  Grid.Row="2" FontSize="14" Margin="0,0,48,0"/>
+                    <ComboBox Grid.Row="3"  Margin="0,10,48,0">
+                        <ComboBoxItem IsSelected="True">Type of specie</ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox Grid.Row="4" Margin="0,10,48,71">
+                        <ComboBoxItem IsSelected="True">Status of endangerment</ComboBoxItem>
+                        <ComboBoxItem>Critically endangered</ComboBoxItem>
+                        <ComboBoxItem>Endangered</ComboBoxItem>
+                        <ComboBoxItem>Vulnerable</ComboBoxItem>
+                        <ComboBoxItem>Critically endangered</ComboBoxItem>
+                        <ComboBoxItem>Dependent on the habitat</ComboBoxItem>
+                        <ComboBoxItem>Close to risk</ComboBoxItem>
+                        <ComboBoxItem>Smallest risk</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+
+                <!-- Third Column -->
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="69"></RowDefinition>
+                        <RowDefinition Height="34"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="37"></RowDefinition>
+                        <RowDefinition Height="35"></RowDefinition>
+                        <RowDefinition Height="248"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Grid.Row="0" Margin="4,37,41,0" RenderTransformOrigin="0.5,0.5">Dangerous for people?</CheckBox>
+                    <CheckBox Grid.Row="1" Margin="4,0,41,10">Is specie on IUCN list?</CheckBox>
+                    <CheckBox Grid.Row="2" Margin="5,0,39,10" RenderTransformOrigin="0.5,0.5">Lives in region with people?</CheckBox>
+
+                    <ComboBox Grid.Row="3" Margin="2,0,41,10" RenderTransformOrigin="0.5,0.5">
+                        <ComboBoxItem IsSelected="true">Tourist status</ComboBoxItem>
+                        <ComboBoxItem>Isolated</ComboBoxItem>
+                        <ComboBoxItem>Partially habituate</ComboBoxItem>
+                        <ComboBoxItem>Habituated</ComboBoxItem>
+                    </ComboBox>
+
+                    <TextBox x:Name="TouristIncome" Grid.Row="4" FontSize="14" Margin="-3,0,39,0" Height="27" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="218"></TextBox>
+                    <Label Grid.Row="5" Margin="-2,0,47,10" RenderTransformOrigin="0.5,0.5">Date of discovery:</Label>
+                    <DatePicker  Grid.Row="6" Height="25" HorizontalAlignment="Left" Margin="2,0,0,0" Name="datePicker1" VerticalAlignment="Top" Width="209" RenderTransformOrigin="0.535,1.34" />
+
+                    <Button  Grid.Row="6" Content="_Add new specie" Margin="101,70,41,144" RenderTransformOrigin="0.626,-0.345" />
+                </Grid>
+            </Grid>
         </Grid>
 
     </DockPanel>

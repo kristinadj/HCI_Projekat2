@@ -22,10 +22,10 @@ namespace EndangeredSpeciesMap
     {
         public MainWindow()
         {
-            init();
+            Init();
         }
 
-        public void init()
+        public void Init()
         {
             InitializeComponent();
 
@@ -45,7 +45,17 @@ namespace EndangeredSpeciesMap
             Description_TypeOfSpecie.Text = "Description";
             Description_TypeOfSpecie.GotFocus += RemoveText_DescriptionType;
             Description_TypeOfSpecie.LostFocus += AddText_DescriptionType;
+
+            Label_Tag.Text = "Label";
+            Label_Tag.GotFocus += RemoveText_LabelTag;
+            Label_Tag.LostFocus += AddText_LabelTag;
+
+            Description_Tag.Text = "Description";
+            Description_Tag.GotFocus += RemoveText_DescriptionTag;
+            Description_Tag.LostFocus += AddText_DescriptionTag;
         }
+
+        /* Adding and removing placeholders */
 
         public void RemoveText_SearchBox(object sender, EventArgs e)
         {
@@ -89,6 +99,54 @@ namespace EndangeredSpeciesMap
         {
             if (string.IsNullOrWhiteSpace(Description_TypeOfSpecie.Text))
                 Description_TypeOfSpecie.Text = "Description";
+        }
+
+        public void RemoveText_LabelTag(object sender, EventArgs e)
+        {
+            Label_Tag.Text = "";
+        }
+
+        public void AddText_LabelTag(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Label_Tag.Text))
+                Label_Tag.Text = "Label";
+        }
+
+        public void RemoveText_DescriptionTag(object sender, EventArgs e)
+        {
+            Description_Tag.Text = "";
+        }
+
+        public void AddText_DescriptionTag(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Description_Tag.Text))
+                Description_Tag.Text = "Description";
+        }
+
+        /*
+         * Cick on 'Add new tag' Button
+         */
+        private void BtnAddTag_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /*
+         * Cick on 'Add new type of species' Button
+         */
+        private void BtnAddType_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /*
+         * Cick on 'Add Specie' Button
+         */
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddSpecieWindow addSpecieWindow = new AddSpecieWindow();
+            addSpecieWindow.Show();
+            this.Close();
         }
     }
 }
