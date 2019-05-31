@@ -34,13 +34,13 @@
                         <ColumnDefinition Width="1.5"/>
                         <ColumnDefinition Width="66"/>
                         <ColumnDefinition Width="16"/>
-                        <ColumnDefinition Width="27.5"/>
+                        <ColumnDefinition Width="103"/>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
                     <!-- Search -->
-                    <TextBox x:Name="SearchParam" FontSize="14" Margin="10,10,8,5" Grid.ColumnSpan="5"/>
-                    <Button  Cursor="Hand" ToolTip="Search" Margin="14,10,10,5" Grid.Column="4" Grid.ColumnSpan="2">
+                    <TextBox x:Name="SearchParam" FontSize="14" Margin="10,10,56,5" Grid.ColumnSpan="6"/>
+                    <Button  Cursor="Hand" ToolTip="Search" Margin="52,10,10,5" Grid.Column="5">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="/EndangeredSpeciesMap;component/Images/search.png"/>
@@ -49,12 +49,11 @@
                     </Button>
 
                     <!-- FIlter -->
-                    <ComboBox Grid.Column="0" Grid.Row="1" Margin="10,5,8,10" Grid.ColumnSpan="5">
+                    <ComboBox Grid.Column="0" Grid.Row="1" Margin="10,5,56,10" Grid.ColumnSpan="6">
                         <ComboBoxItem IsSelected="True">No filter</ComboBoxItem>
                         <ComboBoxItem>Critically endangered</ComboBoxItem>
                         <ComboBoxItem>Endangered</ComboBoxItem>
                         <ComboBoxItem>Vulnerable</ComboBoxItem>
-                        <ComboBoxItem>Critically endangered</ComboBoxItem>
                         <ComboBoxItem>Dependent on the habitat</ComboBoxItem>
                         <ComboBoxItem>Close to risk</ComboBoxItem>
                         <ComboBoxItem>Smallest risk</ComboBoxItem>
@@ -63,7 +62,7 @@
                         <ComboBoxItem>Habituated</ComboBoxItem>
                     </ComboBox>
 
-                    <Button  Cursor="Hand" ToolTip="Filter" Margin="14,5,10,10" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2">
+                    <Button  Cursor="Hand" ToolTip="Filter" Margin="52,5,10,10" Grid.Row="1" Grid.Column="5">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="/EndangeredSpeciesMap;component/Images/filter.png"/>
@@ -71,7 +70,7 @@
                         </Button.Template>
                     </Button>
 
-                    <CheckBox Grid.Column="0" Grid.Row="2" Margin="10,0,10.5,14" Grid.ColumnSpan="2">On map</CheckBox>
+                    <CheckBox Grid.Column="0" Grid.Row="2" Margin="10,0,10,14" Grid.ColumnSpan="2">On map</CheckBox>
 
                     <!-- List of species -->
                     <ListView Grid.Column="0" Grid.Row="2" Margin="10,27,10,0" Grid.RowSpan="3" Grid.ColumnSpan="6">
@@ -156,10 +155,36 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- List of all specie types-->
-                    <ListView Grid.Column="0" Margin="10">
+                    <ListView Grid.Column="0" Margin="10"  ItemsSource="{Binding SpecieTypes}" BorderThickness="1">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="BorderBrush" Value="LightGray" />
+                                <Setter Property="BorderThickness" Value="0,0,0,1" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60"></ColumnDefinition>
+                                            <ColumnDefinition Width="120"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <Image Grid.Column="0" Grid.RowSpan="3" Source="{Binding Icon}" Width="40" Height="40"></Image>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" FontWeight="Bold">Label:</TextBlock>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Label}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="Bold">Name:</TextBlock>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Name}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="2" FontWeight="Bold">Description:</TextBlock>
+                                        <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Description}" />
+                                    </Grid>
 
                                 </WrapPanel>
                             </DataTemplate>
@@ -180,8 +205,8 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" x:Name="imgPhoto" Stretch="Fill" Source="/EndangeredSpeciesMap;component/Images/picture.png" Margin="32,24,37,0"/>
-                        <Button Grid.Column="0" Grid.Row="4" x:Name="btnLoad" Content="_Load Icon" Margin="32,6,37,-22"/>
+                        <Image Name="Icon_TypeOfSpecie" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Stretch="Fill" Source="/EndangeredSpeciesMap;component/Images/picture.png" Margin="32,24,37,0"/>
+                        <Button Grid.Column="0" Grid.Row="4" x:Name="btnLoad" Content="_Load Icon" Margin="32,6,37,-22" Click="BtnLoad_Click"/>
 
                         <TextBox Grid.Row="2" x:Name="Label_TypeOfSpecie" FontSize="14" Margin="172,24,10,64" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
                         <TextBox Grid.Row="2" x:Name="Name_TypeOfSpecie" FontSize="14" Margin="172,59,10,32" Grid.ColumnSpan="2"/>

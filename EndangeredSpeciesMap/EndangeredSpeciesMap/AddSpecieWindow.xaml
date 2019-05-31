@@ -7,13 +7,6 @@
         mc:Ignorable="d"
         Title="Add new specie" MaxHeight="450" MaxWidth="800" ResizeMode="NoResize">
     <DockPanel>
-        <!-- Menu bar -->
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_Help">
-                <MenuItem Header="_Tips" IsCheckable="True"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="_Tutorial"></MenuItem>
-        </Menu>
         <Grid>
             <!-- Form for adding new specie -->
             <Grid Grid.Column="1">
@@ -64,7 +57,6 @@
                         <ComboBoxItem>Critically endangered</ComboBoxItem>
                         <ComboBoxItem>Endangered</ComboBoxItem>
                         <ComboBoxItem>Vulnerable</ComboBoxItem>
-                        <ComboBoxItem>Critically endangered</ComboBoxItem>
                         <ComboBoxItem>Dependent on the habitat</ComboBoxItem>
                         <ComboBoxItem>Close to risk</ComboBoxItem>
                         <ComboBoxItem>Smallest risk</ComboBoxItem>
