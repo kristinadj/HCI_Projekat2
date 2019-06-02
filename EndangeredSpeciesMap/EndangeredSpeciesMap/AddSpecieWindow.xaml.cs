@@ -123,6 +123,22 @@ namespace EndangeredSpeciesMap
                 return;
             }
 
+            try
+            {
+                float.Parse(TouristIncome.Text);
+            }
+            catch (FormatException ex)
+            {
+                MessageBoxResult result = MessageBox.Show("Income from tourists is not valid number!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (DiscoveryDate.DisplayDate.Date >= DateTime.Now.Date)
+            {
+                MessageBoxResult result = MessageBox.Show("Date of discovery is not valid!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             foreach (Specie specie in MainWindow.Species)
             {
                 if (specie.ID == ID.Text)
@@ -142,15 +158,16 @@ namespace EndangeredSpeciesMap
                 OnIUCNList = OnIUCNList.IsChecked == true,
                 InRegionWithPeople = InRegionWithPeople.IsChecked == true,
                 TouristStatus = (TouristStatus)TouristStatus.SelectedIndex,
+                TouristIncome = float.Parse(TouristIncome.Text),
                 Endangerment = (StatusOfEndangerment)StatusOfEndangerment.SelectedIndex,
                 SpecieType = ((SpecieType) SpecieType.SelectedItem).Label,
-                DiscoveryDate = DiscoveryDate.DisplayDate
+                DiscoveryDate = DiscoveryDate.DisplayDate.Date
             };
             // Save new 'Type of specie'
             MainWindow.Species.Add(newSpecie);
             MainWindow.saveSpecies();
 
-            MessageBoxResult success = MessageBox.Show("Tou have successfully added new specie!", "Endangered Species", MessageBoxButton.OK);
+            MessageBoxResult success = MessageBox.Show("You have successfully added new specie!", "Endangered Species", MessageBoxButton.OK);
         }
 
         /*

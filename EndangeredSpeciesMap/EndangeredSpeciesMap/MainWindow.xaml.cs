@@ -28,6 +28,9 @@ namespace EndangeredSpeciesMap
         public static ObservableCollection<Specie> SpeciesOnMap4 { get; set; }
         public static ObservableCollection<SpecieType> SpecieTypes {get; set;}
         public static ObservableCollection<Tag> Tags { get; set; }
+
+        Specie selectedForDrag;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -330,8 +333,24 @@ namespace EndangeredSpeciesMap
             {
                 Specie specie = e.Data.GetData("myFormat") as Specie;
 
-                // TO-DO: dodavanje u listu odredjene mape
-                SpeciesOnMap1.Add(specie);
+                // Add to list for specific map
+                TabItem tab = Tabs.SelectedItem as TabItem;
+                if (tab.Header.Equals("Map #1")) {
+                    SpeciesOnMap1.Add(specie);
+                }   
+                else if (tab.Header.Equals("Map #2"))
+                {
+                    SpeciesOnMap2.Add(specie);
+                } 
+                else if (tab.Header.Equals("Map #3"))
+                {
+                    SpeciesOnMap3.Add(specie);
+                } 
+                else
+                {
+                    SpeciesOnMap4.Add(specie);
+                }
+                Species.Remove(specie);
 
                 Image image = new Image();
                 if (!specie.Icon.Equals(""))
@@ -340,8 +359,11 @@ namespace EndangeredSpeciesMap
                 image.Width = 50;
                 image.Height = 50;
                 image.Tag = specie.ID;
-                image.PreviewMouseLeftButtonDown += DraggedImagePreviewMouseLeftButtonDown;
-                image.PreviewMouseMove += DraggedImageMouseMove;
+
+                image.PreviewMouseLeftButtonDown += DraggedIcon_PreviewMouseLeftButtonDown;
+                image.PreviewMouseMove += DraggedIcon_MouseMove;
+                image.PreviewMouseRightButtonUp += DraggedIcon_PreviewMouseRightButtonUp;
+
 
                 var positionX = e.GetPosition(sender as Canvas).X;
                 var positionY = e.GetPosition(sender as Canvas).Y;
@@ -355,26 +377,76 @@ namespace EndangeredSpeciesMap
             }
         }
 
-        private void DraggedImagePreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void DraggedIcon_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
             startPoint = e.GetPosition(null);
             Image img = sender as Image;
 
-            foreach (Specie specie in Species)
+            TabItem tab = Tabs.SelectedItem as TabItem;
+            if (tab.Header.Equals("Map #1"))
             {
-                if (specie.ID.Equals(img.Tag))
+                foreach (Specie specie in SpeciesOnMap1)
                 {
-                    SpecieList.SelectedItem = specie;
+                    if (specie.ID.Equals(img.Tag))
+                    {
+                        selectedForDrag = specie;
+                    }
+                }
+            }
+            else if (tab.Header.Equals("Map #2"))
+            {
+                foreach (Specie specie in SpeciesOnMap2)
+                {
+                    if (specie.ID.Equals(img.Tag))
+                    {
+                        selectedForDrag = specie;
+                    }
+                }
+            }
+            else if (tab.Header.Equals("Map #3"))
+            {
+                foreach (Specie specie in SpeciesOnMap3)
+                {
+                    if (specie.ID.Equals(img.Tag))
+                    {
+                        selectedForDrag = specie;
+                    }
+                }
+            }
+            else
+            {
+                foreach (Specie specie in SpeciesOnMap4)
+                {
+                    if (specie.ID.Equals(img.Tag))
+                    {
+                        selectedForDrag = specie;
+                    }
                 }
             }
 
             if (e.LeftButton == MouseButtonState.Released)
                 e.Handled = true;
-
         }
 
-        private void DraggedImageMouseMove(object sender, MouseEventArgs e)
+        
+        private void DraggedIcon_PreviewMouseRightButtonUp(object sender, MouseEventArgs e)
+        {
+            e.Handled = true;
+            Point point = e.GetPosition(null);
+            // Icon context menu
+            System.Windows.Forms.ContextMenuStrip iconContextMenu = new System.Windows.Forms.ContextMenuStrip();
+            iconContextMenu.Items.Add("Copy", null);
+            iconContextMenu.Items.Add("Paste", null);
+            iconContextMenu.Items.Add("Remove", null);
+
+            if (e.RightButton == MouseButtonState.Released)
+            {
+                iconContextMenu.Show(new System.Drawing.Point((int)point.X, (int)point.Y));  //places the menu at the pointer position
+            }
+        }
+        
+        private void DraggedIcon_MouseMove(object sender, MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(null);
             Vector diff = startPoint - mousePos;
@@ -385,7 +457,7 @@ namespace EndangeredSpeciesMap
                 Image img = sender as Image;
                 (img.Parent as Canvas).Children.Remove(img);
 
-                Specie selected = (Specie)SpecieList.SelectedItem;
+                Specie selected = selectedForDrag;
 
                 DataObject dragData = new DataObject("myFormat", selected);
                 DragDrop.DoDragDrop(img, dragData, DragDropEffects.Move);
