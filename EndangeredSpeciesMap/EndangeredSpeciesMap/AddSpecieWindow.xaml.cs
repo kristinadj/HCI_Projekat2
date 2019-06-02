@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EndangeredSpeciesMap.Model;
+using Microsoft.Win32;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace EndangeredSpeciesMap
 {
@@ -19,14 +13,25 @@ namespace EndangeredSpeciesMap
     /// </summary>
     public partial class AddSpecieWindow : Window
     {
+        public ObservableCollection<SpecieType> SpecieTypes { get; set; }
         public AddSpecieWindow()
         {
+            InitializeComponent();
+            DataContext = this;
+
             Init();
         }
 
         public void Init()
         {
-            InitializeComponent();
+            // Initalizing Combobox for selecting 'Type of specie'
+            SpecieTypes = MainWindow.SpecieTypes;
+
+            SpecieTypes.Insert(0, new SpecieType
+            {
+                Label = "Select type of specie"
+            });
+            SpecieType.SelectedIndex = 0;
 
             // Initialize placeholders
             ID.Text = "ID";
@@ -97,6 +102,71 @@ namespace EndangeredSpeciesMap
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /*
+         * On Closing
+         */
+        void Window_Closing(object sender, CancelEventArgs e)
+        {
+            SpecieTypes.RemoveAt(0); // removing label 'Select type of specie' from collection
+        }
+
+        /*
+         * Cick on 'Add new specie' Button
+         */
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (SpecieType.SelectedIndex == 0 || TouristStatus.SelectedIndex == 0 || StatusOfEndangerment.SelectedIndex == 0|| ID.Text == "Label" || Name.Text == "Name" || Description.Text == "Description" || TouristIncome.Text == "Income from Tourists")
+            {
+                MessageBoxResult result = MessageBox.Show("Some fileds are empty!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            foreach (Specie specie in MainWindow.Species)
+            {
+                if (specie.ID == ID.Text)
+                {
+                    MessageBoxResult result = MessageBox.Show("Specie with that ID already exists!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+
+            Specie newSpecie = new Specie
+            {
+                ID = ID.Text,
+                Name = Name.Text,
+                Description = Description.Text,
+                Icon = Icon.Source.ToString(),
+                DangerousForPeople = DangerousForPeople.IsChecked == true,
+                OnIUCNList = OnIUCNList.IsChecked == true,
+                InRegionWithPeople = InRegionWithPeople.IsChecked == true,
+                TouristStatus = (TouristStatus)TouristStatus.SelectedIndex,
+                Endangerment = (StatusOfEndangerment)StatusOfEndangerment.SelectedIndex,
+                SpecieType = ((SpecieType) SpecieType.SelectedItem).Label,
+                DiscoveryDate = DiscoveryDate.DisplayDate
+            };
+            // Save new 'Type of specie'
+            MainWindow.Species.Add(newSpecie);
+            MainWindow.saveSpecies();
+
+            MessageBoxResult success = MessageBox.Show("Tou have successfully added new specie!", "Endangered Species", MessageBoxButton.OK);
+        }
+
+        /*
+         * Cick on 'Load Icon' Button
+         */
+        private void BtnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            // open file dialog   
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            // image filters  
+            openFileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // display image in picture box  
+                Icon.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
+            }
         }
     }
 }

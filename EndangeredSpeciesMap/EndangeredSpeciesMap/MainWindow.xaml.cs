@@ -4,10 +4,13 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace EndangeredSpeciesMap
 {
@@ -18,10 +21,13 @@ namespace EndangeredSpeciesMap
     {
         System.Windows.Point startPoint = new System.Windows.Point();
 
-        public Dictionary<string, Specie> species = new Dictionary<string, Specie>();
-        public ObservableCollection<SpecieType> SpecieTypes {get; set;}
-        public Dictionary<string, Tag> tags = new Dictionary<string, Tag>();
-
+        public static ObservableCollection<Specie> Species { get; set; }
+        public static ObservableCollection<Specie> SpeciesOnMap1 { get; set; }
+        public static ObservableCollection<Specie> SpeciesOnMap2 { get; set; }
+        public static ObservableCollection<Specie> SpeciesOnMap3 { get; set; }
+        public static ObservableCollection<Specie> SpeciesOnMap4 { get; set; }
+        public static ObservableCollection<SpecieType> SpecieTypes {get; set;}
+        public static ObservableCollection<Tag> Tags { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -32,6 +38,11 @@ namespace EndangeredSpeciesMap
 
         public void Init()
         {
+            SpeciesOnMap1 = new ObservableCollection<Specie>();
+            SpeciesOnMap2 = new ObservableCollection<Specie>();
+            SpeciesOnMap3 = new ObservableCollection<Specie>();
+            SpeciesOnMap4 = new ObservableCollection<Specie>();
+
             // Reading 'Types of species' from json file
             if (File.Exists(@"..\..\Data\specieTypes.json"))
             {
@@ -46,14 +57,21 @@ namespace EndangeredSpeciesMap
             if (File.Exists(@"..\..\Data\tags.json"))
             {
                 String json = System.IO.File.ReadAllText(@"..\..\Data\tags.json");
-                tags = JsonConvert.DeserializeObject<Dictionary<string, Tag>>(json);
+                Tags = JsonConvert.DeserializeObject<ObservableCollection<Tag>>(json);
+            } else
+            {
+                Tags = new ObservableCollection<Tag>();
             }
+
 
             // Reading 'Species' from json file
             if (File.Exists(@"..\..\Data\species.json"))
             {
                 String json = System.IO.File.ReadAllText(@"..\..\Data\species.json");
-                species = JsonConvert.DeserializeObject<Dictionary<string, Specie>>(json);
+                Species = JsonConvert.DeserializeObject<ObservableCollection<Specie>>(json);
+            } else
+            {
+                Species = new ObservableCollection<Specie>();
             }
 
             // Initialize placeholders
@@ -162,6 +180,30 @@ namespace EndangeredSpeciesMap
         }
 
         /*
+         * Saving 'Species' in json file
+         */
+        public static void saveSpecies()
+        {
+            string json = JsonConvert.SerializeObject(Species);
+            using (StreamWriter file = new StreamWriter(@"..\..\Data\species.json", false))
+            {
+                file.Write(json);
+            }
+        }
+
+        /*
+         * Saving 'Tags' in json file
+         */
+        public void saveTags()
+        {
+            string json = JsonConvert.SerializeObject(Tags);
+            using (StreamWriter file = new StreamWriter(@"..\..\Data\tags.json", false))
+            {
+                file.Write(json);
+            }
+        }
+
+        /*
          * Cick on 'Add new tag' Button
          */
         private void BtnAddTag_Click(object sender, RoutedEventArgs e)
@@ -176,7 +218,7 @@ namespace EndangeredSpeciesMap
         {
             if (Label_TypeOfSpecie.Text == "Label" || Name_TypeOfSpecie.Text == "Name" || Description_TypeOfSpecie.Text == "Description")
             {
-                MessageBoxResult result = MessageBox.Show("Some fileds are empty!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBoxResult result = MessageBox.Show("Some fileds are empty!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -184,17 +226,17 @@ namespace EndangeredSpeciesMap
             {
                 if (type.Label == Label_TypeOfSpecie.Text)
                 {
-                    MessageBoxResult result = MessageBox.Show("Type with that label already exists!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBoxResult result = MessageBox.Show("Type with that label already exists!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
-            
 
             SpecieType newType = new SpecieType
             {
                 Label = Label_TypeOfSpecie.Text,
                 Name = Name_TypeOfSpecie.Text,
-                Description = Description_TypeOfSpecie.Text
+                Description = Description_TypeOfSpecie.Text,
+                Icon = Icon_TypeOfSpecie.Source
             };
             // Save new 'Type of specie'
             SpecieTypes.Add(newType);
@@ -215,47 +257,142 @@ namespace EndangeredSpeciesMap
          */
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
-            if (Label_TypeOfSpecie.Text == "Label" || Name_TypeOfSpecie.Text == "Name" || Description_TypeOfSpecie.Text == "Description")
-            {
-                MessageBoxResult result = MessageBox.Show("Please fill out information first!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            bool saved = false;
-            foreach (SpecieType type in SpecieTypes)
-            {
-                if (type.Label == Label_TypeOfSpecie.Text)
-                {
-                    saved = true;
-                    break;
-                }
-            }
-
-            if (saved == false)
-            {
-                MessageBoxResult result = MessageBox.Show("Please save information first!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
             // open file dialog   
             OpenFileDialog openFileDialog = new OpenFileDialog();
             // image filters  
             openFileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
             if (openFileDialog.ShowDialog() == true)
             {
-                // setting image file path 
-                foreach (SpecieType type in SpecieTypes)
-                {
-                    if (type.Label == Label_TypeOfSpecie.Text)
-                    {
-                        type.Icon = openFileDialog.FileName;
-                        break;
-                    }
-                }
-                saveTypesOfSpecies();
-
                 // display image in picture box  
                 Icon_TypeOfSpecie.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
             }
+        }
+
+        /* Drag and drop */
+        private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            startPoint = e.GetPosition(null);
+
+        }
+
+        private void ListView_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(null);
+            Vector diff = startPoint - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                // Get the dragged ListViewItem
+                ListView listView = sender as ListView;
+                ListViewItem listViewItem =
+                    FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+
+                // Find the data behind the ListViewItem
+                Specie specie = (Specie)listView.ItemContainerGenerator.
+                    ItemFromContainer(listViewItem);
+
+                Image image = new Image();
+                image.Source = new BitmapImage(new Uri(specie.Icon.ToString(), UriKind.Absolute));
+
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject("myFormat", specie);
+                DragDrop.DoDragDrop(image, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            do
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            while (current != null);
+            return null;
+        }
+
+        private void Canvas_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void Canvas_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("myFormat"))
+            {
+                Specie specie = e.Data.GetData("myFormat") as Specie;
+
+                // TO-DO: dodavanje u listu odredjene mape
+                SpeciesOnMap1.Add(specie);
+
+                Image image = new Image();
+                if (!specie.Icon.Equals(""))
+                    image.Source = new BitmapImage(new Uri(specie.Icon.ToString(), UriKind.Absolute));
+
+                image.Width = 50;
+                image.Height = 50;
+                image.Tag = specie.ID;
+                image.PreviewMouseLeftButtonDown += DraggedImagePreviewMouseLeftButtonDown;
+                image.PreviewMouseMove += DraggedImageMouseMove;
+
+                var positionX = e.GetPosition(sender as Canvas).X;
+                var positionY = e.GetPosition(sender as Canvas).Y;
+
+                specie.X = positionX;
+                specie.Y = positionY;
+
+                (sender as Canvas).Children.Add(image);
+                Canvas.SetLeft(image, positionX - image.Width / 2.0);
+                Canvas.SetTop(image, positionY - image.Height / 2.0);
+            }
+        }
+
+        private void DraggedImagePreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+            startPoint = e.GetPosition(null);
+            Image img = sender as Image;
+
+            foreach (Specie specie in Species)
+            {
+                if (specie.ID.Equals(img.Tag))
+                {
+                    SpecieList.SelectedItem = specie;
+                }
+            }
+
+            if (e.LeftButton == MouseButtonState.Released)
+                e.Handled = true;
+
+        }
+
+        private void DraggedImageMouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(null);
+            Vector diff = startPoint - mousePos;
+            if (e.LeftButton == MouseButtonState.Pressed &&
+               (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+               Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                Image img = sender as Image;
+                (img.Parent as Canvas).Children.Remove(img);
+
+                Specie selected = (Specie)SpecieList.SelectedItem;
+
+                DataObject dragData = new DataObject("myFormat", selected);
+                DragDrop.DoDragDrop(img, dragData, DragDropEffects.Move);
+                e.Handled = true;
+
+            }
+
         }
     }
 }

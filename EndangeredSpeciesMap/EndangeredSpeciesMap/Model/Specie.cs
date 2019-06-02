@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace EndangeredSpeciesMap.Model
 {
     public enum StatusOfEndangerment
     {
-        CriticallyEndangered, Endangered, Vulnerable, DependentOnTheHabitat, CloseToRisk, SmallestRisk
+        CriticallyEndangered = 1, Endangered = 2, Vulnerable = 3, DependentOnTheHabitat = 4, CloseToRisk = 5, SmallestRisk = 6
     }
 
     public enum TouristStatus
     {
-        Isolated, PartiallyHabituate, Habituated
+        Isolated = 1, PartiallyHabituate = 2, Habituated = 3
     }
     public class Specie
     {
@@ -31,5 +29,7 @@ namespace EndangeredSpeciesMap.Model
         public DateTime DiscoveryDate { get; set; }
 
         public List<String> Tags = new List<String>(); // String - Tag unique label
+        public double X { get; set; }
+        public double Y { get; set; }
     }
 }
