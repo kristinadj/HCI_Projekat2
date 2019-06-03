@@ -12,7 +12,7 @@
         <!-- Menu bar -->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Help">
-                <MenuItem Header="_Tips" IsCheckable="True"></MenuItem>
+                <MenuItem x:Name="TipsItem" Header="_Tips" IsCheckable="True"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Tutorial"></MenuItem>
         </Menu>

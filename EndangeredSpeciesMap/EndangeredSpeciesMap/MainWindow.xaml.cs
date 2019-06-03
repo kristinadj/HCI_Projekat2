@@ -30,6 +30,8 @@ namespace EndangeredSpeciesMap
         public static ObservableCollection<SpecieType> SpecieTypes {get; set;}
         public static ObservableCollection<Tag> Tags { get; set; }
 
+        public static Dictionary<StatusOfEndangerment, List<String>> Tips;
+
         Specie selectedForDrag;
         Specie selectedOnMap = null;
         Image imgSelectedOnMap = null;
@@ -79,6 +81,9 @@ namespace EndangeredSpeciesMap
             {
                 Species = new ObservableCollection<Specie>();
             }
+
+            // Initialize 'Tips' dictionary
+            Tips = initTipsDictionary();
 
             // Initialize placeholders
             SearchParam.Text = "Search...";
@@ -414,6 +419,13 @@ namespace EndangeredSpeciesMap
                 (sender as Canvas).Children.Add(image);
                 Canvas.SetLeft(image, positionX - image.Width / 2.0);
                 Canvas.SetTop(image, positionY - image.Height / 2.0);
+
+                if (TipsItem.IsChecked)
+                {
+                    Random rnd = new Random();
+                    int tipNum = rnd.Next(0, Tips[specie.Endangerment].Count);
+                    MessageBoxResult tip = MessageBox.Show(Tips[specie.Endangerment][tipNum], "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
         }
 
@@ -648,6 +660,50 @@ namespace EndangeredSpeciesMap
 
             }
 
+        }
+
+        /*
+         * Initializing dicitonary with tips for user
+         */  
+        private Dictionary<StatusOfEndangerment, List<String>> initTipsDictionary()
+        {
+            Dictionary<StatusOfEndangerment, List<String>> dict = new Dictionary<StatusOfEndangerment, List<String>>();
+
+            dict[StatusOfEndangerment.CriticallyEndangered] = new List<String>();
+            dict[StatusOfEndangerment.CriticallyEndangered].Add("Critically endanegered specie - Faces an extremely high risk of extinction in the immediate future.");
+            dict[StatusOfEndangerment.CriticallyEndangered].Add("Critically endanegered specie - If the reasons for population reduction no longer occur and can be reversed, the population needs to have been reduced by at least 90 % ");
+            dict[StatusOfEndangerment.CriticallyEndangered].Add("Critically endanegered specie - Severe habitat fragmentation or existing at just one location");
+            dict[StatusOfEndangerment.CriticallyEndangered].Add("Critically endanegered specie - Numbers less than 50");
+            dict[StatusOfEndangerment.CriticallyEndangered].Add("Critically endanegered specie - At least 50% chance of going Extinct in the Wild over 10 years");
+
+            dict[StatusOfEndangerment.Endangered] = new List<String>();
+            dict[StatusOfEndangerment.Endangered].Add("Endangered specie - Very likely to become extinct in the near future.");
+            dict[StatusOfEndangerment.Endangered].Add("Endangered specie - Many nations have laws that protect conservation-reliant species: for example, forbidding hunting, restricting land development or creating protected areas.");
+            dict[StatusOfEndangerment.Endangered].Add("Endangered specie - Severely fragmented or known to exist at no more than five locations.");
+            dict[StatusOfEndangerment.Endangered].Add("Endangered specie - Population estimated to number fewer than 2,500 mature individuals");
+            dict[StatusOfEndangerment.Endangered].Add("Endangered specie - Probability of extinction in the wild is at least 20% within 20 years or five generations");
+
+
+            dict[StatusOfEndangerment.Vulnerable] = new List<String>();
+            dict[StatusOfEndangerment.Vulnerable].Add("Vulnerable specie- Likely to become endangered unless the circumstances that are threatening its survival and reproduction improve");
+            dict[StatusOfEndangerment.Vulnerable].Add("Vulnerable specie - Vulnerability is mainly caused by habitat loss or destruction of the species home.");
+            dict[StatusOfEndangerment.Vulnerable].Add("Vulnerable specie - Severely fragmented or known to exist at no more than ten locations.");
+            dict[StatusOfEndangerment.Vulnerable].Add("Vulnerable specie - Population estimated to number fewer than 10,000 mature individuals");
+            dict[StatusOfEndangerment.Vulnerable].Add("Vulnerable specie - Probability of extinction in the wild is at least at least 10% within 100 years.");
+
+
+            dict[StatusOfEndangerment.DependentOnTheHabitat] = new List<String>();
+            dict[StatusOfEndangerment.DependentOnTheHabitat].Add("Dependent on the habitat - Dependent on conservation efforts to prevent it from becoming threatened with extinction");
+            dict[StatusOfEndangerment.DependentOnTheHabitat].Add("Dependent on the habitat - Such species must be the focus of a continuing species-specific and/or habitat-specific conservation programme, the cessation of which would result in the species qualifying for one of the threatened categories within a period of five years.");
+            dict[StatusOfEndangerment.DependentOnTheHabitat].Add("Dependent on the habitat - Examples of conservation-dependent species include the black caiman (Melanosuchus niger), the sinarapan, the California ground cricket, and the flowering plant Garcinia hermonii.");
+
+            dict[StatusOfEndangerment.CloseToRisk] = new List<String>();
+            dict[StatusOfEndangerment.CloseToRisk].Add("Close to risk to extinct - May be considered threatened with extinction in the near future, although it does not currently qualify for the threatened status.");
+
+            dict[StatusOfEndangerment.SmallestRisk] = new List<String>();
+            dict[StatusOfEndangerment.SmallestRisk].Add("Smallest risk of endangerment - Evaluated as not being a focus of species conservation");
+
+            return dict;
         }
     }
 }
