@@ -105,6 +105,12 @@
                                 </WrapPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Edit specie" Name="EditSpecie" Click="EditSpecie_Click"/>
+                                <MenuItem Header="Delete specie" Name="DeleteSpecie" Click="DeleteSpecie_Click"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                     </ListView>
 
                     <!-- Add button -->

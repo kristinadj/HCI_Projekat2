@@ -705,5 +705,21 @@ namespace EndangeredSpeciesMap
 
             return dict;
         }
+
+        private void EditSpecie_Click(object sender, RoutedEventArgs e)
+        {
+            Specie selected = (Specie)SpecieList.SelectedItem;
+
+        }
+
+        private void DeleteSpecie_Click(object sender, RoutedEventArgs e)
+        {
+            Specie selected = (Specie)SpecieList.SelectedItem;
+            if (Species.Contains(selected)) {
+                Species.Remove(selected);
+                saveSpecies();
+                MessageBoxResult success = MessageBox.Show("You have successfully deleted specie!", "Endangered Species", MessageBoxButton.OK);
+            }
+        }
     }
 }
