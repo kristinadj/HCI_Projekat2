@@ -30,6 +30,8 @@ namespace EndangeredSpeciesMap
         public static ObservableCollection<Tag> Tags { get; set; }
 
         Specie selectedForDrag;
+        Specie selectedOnMap = null;
+        Image imgSelectedOnMap = null;
 
         public MainWindow()
         {
@@ -433,19 +435,149 @@ namespace EndangeredSpeciesMap
         private void DraggedIcon_PreviewMouseRightButtonUp(object sender, MouseEventArgs e)
         {
             e.Handled = true;
-            Point point = e.GetPosition(null);
+            Point point = e.GetPosition(sender as Canvas);
+            Image img = sender as Image;
+
+            TabItem tab = Tabs.SelectedItem as TabItem;
+            if (tab.Header.Equals("Map #1"))
+            {
+                foreach (Specie specie in SpeciesOnMap1)
+                {
+                    if (specie.ID.Equals(img.Tag))
+                    {
+                        selectedOnMap = specie;
+                    }
+                }
+            }
+            else if (tab.Header.Equals("Map #2"))
+            {
+                foreach (Specie specie in SpeciesOnMap2)
+                {
+                    if (specie.ID.Equals(img.Tag))
+                    {
+                        selectedOnMap = specie;
+                    }
+                }
+            }
+            else if (tab.Header.Equals("Map #3"))
+            {
+                foreach (Specie specie in SpeciesOnMap3)
+                {
+                    if (specie.ID.Equals(img.Tag))
+                    {
+                        selectedOnMap = specie;
+                    }
+                }
+            }
+            else
+            {
+                foreach (Specie specie in SpeciesOnMap4)
+                {
+                    if (specie.ID.Equals(img.Tag))
+                    {
+                        selectedOnMap = specie;
+                    }
+                }
+            }
+
+            imgSelectedOnMap = sender as Image;
+
             // Icon context menu
             System.Windows.Forms.ContextMenuStrip iconContextMenu = new System.Windows.Forms.ContextMenuStrip();
-            iconContextMenu.Items.Add("Copy", null);
-            iconContextMenu.Items.Add("Paste", null);
-            iconContextMenu.Items.Add("Remove", null);
+            iconContextMenu.Items.Add("Cut", null, DraggedIcon_Cut);
+            iconContextMenu.Items.Add("Remove", null, DraggedIcon_Remove);
 
             if (e.RightButton == MouseButtonState.Released)
             {
                 iconContextMenu.Show(new System.Drawing.Point((int)point.X, (int)point.Y));  //places the menu at the pointer position
             }
         }
-        
+
+        /*
+         * Cutting specie from map
+         */
+        private void DraggedIcon_Cut(object sender, EventArgs e)
+        {
+            TabItem tab = Tabs.SelectedItem as TabItem;
+
+            if (tab.Header.Equals("Map #1"))
+            {
+                SpeciesOnMap1.Remove(selectedOnMap);
+            }
+            else if (tab.Header.Equals("Map #2"))
+            {
+                SpeciesOnMap2.Remove(selectedOnMap);
+            }
+            else if (tab.Header.Equals("Map #3"))
+            {
+                SpeciesOnMap3.Remove(selectedOnMap);
+            }
+            else
+            {
+                SpeciesOnMap4.Remove(selectedOnMap);
+            }
+
+            (imgSelectedOnMap.Parent as Canvas).Children.Remove(imgSelectedOnMap);
+        }
+
+        /*
+         * Removing specie from map
+         */
+        private void DraggedIcon_Remove(object sender, EventArgs e)
+        {
+            TabItem tab = Tabs.SelectedItem as TabItem;
+            if (tab.Header.Equals("Map #1"))
+            {
+                SpeciesOnMap1.Remove(selectedOnMap);   
+            }
+            else if (tab.Header.Equals("Map #2"))
+            {
+                SpeciesOnMap2.Remove(selectedOnMap);
+            }
+            else if (tab.Header.Equals("Map #3"))
+            {
+                SpeciesOnMap3.Remove(selectedOnMap);
+            }
+            else
+            {
+                SpeciesOnMap4.Remove(selectedOnMap);
+            }
+
+            (imgSelectedOnMap.Parent as Canvas).Children.Remove(imgSelectedOnMap);
+            saveSpecies();
+            selectedOnMap = null;
+            imgSelectedOnMap = null;
+        }
+
+        private void Canvas_Paste(object sender, RoutedEventArgs e)
+        {
+            if (selectedOnMap == null)
+            {
+                MessageBox.Show("Nothing is copied!", "Endangered species", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            } else
+            {
+                TabItem tab = Tabs.SelectedItem as TabItem;
+                if (tab.Header.Equals("Map #1"))
+                {
+                    Canvas1.Children.Add(imgSelectedOnMap);
+                }
+                else if (tab.Header.Equals("Map #2"))
+                {
+                    Canvas2.Children.Add(imgSelectedOnMap);
+                }
+                else if (tab.Header.Equals("Map #3"))
+                {
+                    Canvas3.Children.Add(imgSelectedOnMap);
+                }
+                else
+                {
+                    Canvas4.Children.Add(imgSelectedOnMap);
+                }  
+            }
+            saveSpecies();
+        }
+
         private void DraggedIcon_MouseMove(object sender, MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(null);
@@ -458,6 +590,12 @@ namespace EndangeredSpeciesMap
                 (img.Parent as Canvas).Children.Remove(img);
 
                 Specie selected = selectedForDrag;
+
+                var positionX = e.GetPosition(sender as Canvas).X;
+                var positionY = e.GetPosition(sender as Canvas).Y;
+
+                selected.X = positionX;
+                selected.Y = positionY;
 
                 DataObject dragData = new DataObject("myFormat", selected);
                 DragDrop.DoDragDrop(img, dragData, DragDropEffects.Move);

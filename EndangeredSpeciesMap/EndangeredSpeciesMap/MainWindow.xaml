@@ -115,6 +115,11 @@
                             <TabItem Header="Map #1">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                     <Canvas x:Name="Canvas1" Width="{Binding ActualWidth, ElementName=map1}" Height="{Binding ActualHeight, ElementName=map1}" AllowDrop="True" DragEnter="Canvas_DragEnter" Drop="Canvas_Drop" >
+                                        <Canvas.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Paste" Click="Canvas_Paste" />
+                                            </ContextMenu>
+                                        </Canvas.ContextMenu>
                                         <Canvas.Background>
                                             <VisualBrush  >
                                                 <VisualBrush.Visual>
@@ -127,7 +132,12 @@
                             </TabItem>
                             <TabItem Header="Map #2">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                    <Canvas Width="{Binding ActualWidth, ElementName=map2}" Height="{Binding ActualHeight, ElementName=map2}" AllowDrop="True" DragEnter="Canvas_DragEnter" Drop="Canvas_Drop" >
+                                    <Canvas x:Name="Canvas2" Width="{Binding ActualWidth, ElementName=map2}" Height="{Binding ActualHeight, ElementName=map2}" AllowDrop="True" DragEnter="Canvas_DragEnter" Drop="Canvas_Drop" >
+                                        <Canvas.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Paste" Click="Canvas_Paste"/>
+                                            </ContextMenu>
+                                        </Canvas.ContextMenu>
                                         <Canvas.Background>
                                             <VisualBrush  >
                                                 <VisualBrush.Visual>
@@ -140,7 +150,12 @@
                             </TabItem>
                             <TabItem Header="Map #3">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                    <Canvas Width="{Binding ActualWidth, ElementName=map3}" Height="{Binding ActualHeight, ElementName=map3}" AllowDrop="True" DragEnter="Canvas_DragEnter" Drop="Canvas_Drop">
+                                    <Canvas x:Name="Canvas3" Width="{Binding ActualWidth, ElementName=map3}" Height="{Binding ActualHeight, ElementName=map3}" AllowDrop="True" DragEnter="Canvas_DragEnter" Drop="Canvas_Drop">
+                                        <Canvas.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Paste" Click="Canvas_Paste"/>
+                                            </ContextMenu>
+                                        </Canvas.ContextMenu>
                                         <Canvas.Background>
                                             <VisualBrush  >
                                                 <VisualBrush.Visual>
@@ -153,7 +168,12 @@
                             </TabItem>
                             <TabItem Header="Map #4">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                    <Canvas Width="{Binding ActualWidth, ElementName=map4}" Height="{Binding ActualHeight, ElementName=map4}" AllowDrop="True" DragEnter="Canvas_DragEnter" Drop="Canvas_Drop">
+                                    <Canvas x:Name="Canvas4" Width="{Binding ActualWidth, ElementName=map4}" Height="{Binding ActualHeight, ElementName=map4}" AllowDrop="True" DragEnter="Canvas_DragEnter" Drop="Canvas_Drop">
+                                        <Canvas.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Paste" Click="Canvas_Paste"/>
+                                            </ContextMenu>
+                                        </Canvas.ContextMenu>
                                         <Canvas.Background>
                                             <VisualBrush  >
                                                 <VisualBrush.Visual>
