@@ -6,6 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:local="clr-namespace:EndangeredSpeciesMap"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="Endangered Species" MaxHeight="450" MaxWidth="800" ResizeMode="NoResize">
     <DockPanel>
         <!-- Menu bar -->

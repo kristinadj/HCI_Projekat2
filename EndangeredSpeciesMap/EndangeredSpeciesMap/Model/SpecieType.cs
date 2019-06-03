@@ -10,6 +10,8 @@ namespace EndangeredSpeciesMap.Model
 
         public string Description { get; set; }
 
-        public ImageSource Icon { get; set; }
+        public string Icon { get; set; }
+
+        public bool iconUploaded { get; set; }
     }
 }

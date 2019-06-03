@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -173,6 +174,37 @@ namespace EndangeredSpeciesMap
         }
 
         /*
+         * On Closing - saving all species in Species collestion
+         */
+        void Window_Closing(object sender, CancelEventArgs e)
+        {
+            updateMainList(SpeciesOnMap1);
+            updateMainList(SpeciesOnMap2);
+            updateMainList(SpeciesOnMap3);
+            updateMainList(SpeciesOnMap4);
+            saveSpecies();
+        }
+
+        private void updateMainList(ObservableCollection<Specie> collection)
+        {
+            foreach (Specie sp in collection)
+            {
+                if (!inSpecies(sp.ID))
+                    Species.Add(sp);
+            }
+        }
+
+        private bool inSpecies(String id)
+        {
+            foreach (Specie specie in Species)
+            {
+                if (specie.ID.Equals(id))
+                    return true;
+            }
+            return false;
+        }
+
+        /*
          * Saving 'Types of species' in json file
          */
         public void saveTypesOfSpecies()
@@ -236,12 +268,18 @@ namespace EndangeredSpeciesMap
                 }
             }
 
+            if (Icon_TypeOfSpecie.Source.ToString().Equals("pack://application:,,,/EndangeredSpeciesMap;component/Images/picture.png"))
+            {
+                MessageBoxResult result = MessageBox.Show("You have to upload an icon!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             SpecieType newType = new SpecieType
             {
                 Label = Label_TypeOfSpecie.Text,
                 Name = Name_TypeOfSpecie.Text,
                 Description = Description_TypeOfSpecie.Text,
-                Icon = Icon_TypeOfSpecie.Source
+                Icon = Icon_TypeOfSpecie.Source.ToString()
             };
             // Save new 'Type of specie'
             SpecieTypes.Add(newType);
@@ -549,6 +587,9 @@ namespace EndangeredSpeciesMap
             imgSelectedOnMap = null;
         }
 
+        /*
+         * Paste specie icon on map
+         */
         private void Canvas_Paste(object sender, RoutedEventArgs e)
         {
             if (selectedOnMap == null)
@@ -561,18 +602,22 @@ namespace EndangeredSpeciesMap
                 if (tab.Header.Equals("Map #1"))
                 {
                     Canvas1.Children.Add(imgSelectedOnMap);
+                    SpeciesOnMap1.Add(selectedOnMap);
                 }
                 else if (tab.Header.Equals("Map #2"))
                 {
                     Canvas2.Children.Add(imgSelectedOnMap);
+                    SpeciesOnMap2.Add(selectedOnMap);
                 }
                 else if (tab.Header.Equals("Map #3"))
                 {
                     Canvas3.Children.Add(imgSelectedOnMap);
+                    SpeciesOnMap3.Add(selectedOnMap);
                 }
                 else
                 {
                     Canvas4.Children.Add(imgSelectedOnMap);
+                    SpeciesOnMap4.Add(selectedOnMap);
                 }  
             }
             saveSpecies();

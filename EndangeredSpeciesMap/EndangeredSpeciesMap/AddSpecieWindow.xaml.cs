@@ -117,6 +117,7 @@ namespace EndangeredSpeciesMap
          */
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             if (SpecieType.SelectedIndex == 0 || TouristStatus.SelectedIndex == 0 || StatusOfEndangerment.SelectedIndex == 0|| ID.Text == "Label" || Name.Text == "Name" || Description.Text == "Description" || TouristIncome.Text == "Income from Tourists")
             {
                 MessageBoxResult result = MessageBox.Show("Some fileds are empty!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -147,20 +148,39 @@ namespace EndangeredSpeciesMap
                     return;
                 }
             }
+            
+
+            // setting icon
+            String iconSource = "";
+            SpecieType selectedType = ((SpecieType)SpecieType.SelectedItem);
+
+            if (Icon.Source.ToString().Equals("pack://application:,,,/EndangeredSpeciesMap;component/Images/picture.png"))
+            {
+                foreach (SpecieType type in MainWindow.SpecieTypes)
+                {
+                    if (type.Label.Equals(selectedType.Label))
+                    {
+                        iconSource = type.Icon;
+                    }
+                }
+            } else
+            {
+                iconSource = Icon.Source.ToString();
+            }
 
             Specie newSpecie = new Specie
             {
                 ID = ID.Text,
                 Name = Name.Text,
                 Description = Description.Text,
-                Icon = Icon.Source.ToString(),
+                Icon = iconSource,
                 DangerousForPeople = DangerousForPeople.IsChecked == true,
                 OnIUCNList = OnIUCNList.IsChecked == true,
                 InRegionWithPeople = InRegionWithPeople.IsChecked == true,
                 TouristStatus = (TouristStatus)TouristStatus.SelectedIndex,
                 TouristIncome = float.Parse(TouristIncome.Text),
                 Endangerment = (StatusOfEndangerment)StatusOfEndangerment.SelectedIndex,
-                SpecieType = ((SpecieType) SpecieType.SelectedItem).Label,
+                SpecieType = selectedType.Label,
                 DiscoveryDate = DiscoveryDate.DisplayDate.Date
             };
             // Save new 'Type of specie'
