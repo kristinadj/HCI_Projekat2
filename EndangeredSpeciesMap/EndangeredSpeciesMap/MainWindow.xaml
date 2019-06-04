@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
-        xmlns:local="clr-namespace:EndangeredSpeciesMap"
+        xmlns:l="clr-namespace:EndangeredSpeciesMap"
         mc:Ignorable="d"
         Closing="Window_Closing"
         Title="Endangered Species" MaxHeight="450" MaxWidth="800" ResizeMode="NoResize">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
+    
     <DockPanel>
         <!-- Menu bar -->
         <Menu DockPanel.Dock="Top">
@@ -40,7 +44,7 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Search -->
-                    <TextBox x:Name="SearchParam" FontSize="14" Margin="10,10,56,5" Grid.ColumnSpan="6"/>
+                    <TextBox x:Name="SearchParam" FontSize="14" Margin="10,10,56,5" Grid.ColumnSpan="6" l:HelpProvider.HelpKey="Indeks"/>
                     <Button  Cursor="Hand" ToolTip="Search" Margin="52,10,10,5" Grid.Column="5" Click="Button_Click_1">
                         <Button.Template>
                             <ControlTemplate>
@@ -115,7 +119,7 @@
                     </ListView>
 
                     <!-- Add button -->
-                    <Button Grid.Column="0" Grid.Row="5" Margin="10,5,64,10" RenderTransformOrigin="0,0.48" Grid.ColumnSpan="4" Click="Button_Click">
+                    <Button x:Name="btnAddSpecie" Grid.Column="0" Grid.Row="5" Margin="10,5,64,10" RenderTransformOrigin="0,0.48" Grid.ColumnSpan="4" Click="Button_Click">
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
                                 <Image Margin="5" Source="/EndangeredSpeciesMap;component/Images/addspecies.png"></Image>
