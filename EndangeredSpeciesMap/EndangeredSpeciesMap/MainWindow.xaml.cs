@@ -250,7 +250,30 @@ namespace EndangeredSpeciesMap
          */
         private void BtnAddTag_Click(object sender, RoutedEventArgs e)
         {
+            if (Label_Tag.Text == "Label" || Description_Tag.Text == "Description")
+            {
+                MessageBoxResult result = MessageBox.Show("Some fileds are empty!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            foreach (Tag type in Tags)
+            {
+                if (type.Label == Label_Tag.Text)
+                {
+                    MessageBoxResult result = MessageBox.Show("Tag with that label already exists!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+
+            Tag newTag = new Tag
+            {
+                Label = Label_Tag.Text,
+                Description = Description_Tag.Text,
+                Colour = cp.SelectedColor.Value.ToString()
+            };
+            // Save new 'Type of specie'
+            Tags.Add(newTag);
+            saveTags();
         }
 
         /*
@@ -728,6 +751,88 @@ namespace EndangeredSpeciesMap
             Specie selected = (Specie)SpecieList.SelectedItem;
             DetailsWindow detailsWindow = new DetailsWindow(selected);
             detailsWindow.Show();
+        }
+
+        private void DeleteType_Click(object sender, RoutedEventArgs e)
+        {
+            SpecieType selected = (SpecieType)Types.SelectedItem;
+            SpecieTypes.Remove(selected);
+            saveTypesOfSpecies();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            if (File.Exists(@"..\..\Data\species.json"))
+            {
+                String json = System.IO.File.ReadAllText(@"..\..\Data\species.json");
+                Species = JsonConvert.DeserializeObject<ObservableCollection<Specie>>(json);
+            }
+            else
+            {
+                Species = new ObservableCollection<Specie>();
+            }
+
+            ObservableCollection<Specie> newSpecies = new ObservableCollection<Specie>();
+
+       
+            foreach (Specie spec in Species)
+            {
+                if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
+                {
+                    newSpecies.Add(spec);
+                }
+            }
+
+
+            Species = new ObservableCollection<Specie>();
+            foreach (Specie spec in newSpecies)
+            {
+                MessageBoxResult success = MessageBox.Show(spec.Name, "Endangered Species", MessageBoxButton.OK);
+
+                Species.Add(spec);
+            }
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<Specie> newSpecies = new ObservableCollection<Specie>();
+
+            if (Filter.SelectedIndex != 0)
+            {
+                if (Filter.SelectedIndex <= 6)
+                {
+                    foreach (Specie spec in Species)
+                    {
+                        if (spec.Endangerment == (StatusOfEndangerment)Filter.SelectedIndex)
+                        {
+                            if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
+                                newSpecies.Add(spec);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Specie spec in Species)
+                    {
+                        if (spec.Endangerment != (StatusOfEndangerment)(Filter.SelectedIndex - 6))
+                        {
+                            if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
+                                newSpecies.Add(spec);
+                        }
+                    }
+                }
+
+            }
+
+            Species = new ObservableCollection<Specie>();
+            foreach (Specie spec in newSpecies)
+            {
+                MessageBoxResult success = MessageBox.Show(spec.Name, "Endangered Species", MessageBoxButton.OK);
+
+                Species.Add(spec);
+            }
         }
     }
 }

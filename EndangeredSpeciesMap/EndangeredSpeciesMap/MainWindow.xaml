@@ -41,7 +41,7 @@
 
                     <!-- Search -->
                     <TextBox x:Name="SearchParam" FontSize="14" Margin="10,10,56,5" Grid.ColumnSpan="6"/>
-                    <Button  Cursor="Hand" ToolTip="Search" Margin="52,10,10,5" Grid.Column="5">
+                    <Button  Cursor="Hand" ToolTip="Search" Margin="52,10,10,5" Grid.Column="5" Click="Button_Click_1">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="/EndangeredSpeciesMap;component/Images/search.png"/>
@@ -50,7 +50,7 @@
                     </Button>
 
                     <!-- FIlter -->
-                    <ComboBox Grid.Column="0" Grid.Row="1" Margin="10,5,56,10" Grid.ColumnSpan="6">
+                    <ComboBox Name="Filter" Grid.Column="0" Grid.Row="1" Margin="10,5,56,10" Grid.ColumnSpan="6">
                         <ComboBoxItem IsSelected="True">No filter</ComboBoxItem>
                         <ComboBoxItem>Critically endangered</ComboBoxItem>
                         <ComboBoxItem>Endangered</ComboBoxItem>
@@ -63,7 +63,7 @@
                         <ComboBoxItem>Habituated</ComboBoxItem>
                     </ComboBox>
 
-                    <Button  Cursor="Hand" ToolTip="Filter" Margin="52,5,10,10" Grid.Row="1" Grid.Column="5">
+                    <Button  Cursor="Hand" ToolTip="Filter" Margin="52,5,10,10" Grid.Row="1" Grid.Column="5" Click="Button_Click_2">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="/EndangeredSpeciesMap;component/Images/filter.png"/>
@@ -216,13 +216,18 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- List of all specie types-->
-                    <ListView Grid.Column="0" Margin="10"  ItemsSource="{Binding SpecieTypes}">
+                    <ListView Name="Types" Grid.Column="0" Margin="10"  ItemsSource="{Binding SpecieTypes}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Setter Property="BorderBrush" Value="LightGray" />
                                 <Setter Property="BorderThickness" Value="0,0,0,1" />
                             </Style>
                         </ListView.ItemContainerStyle>
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete type" Name="DeleteType" Click="DeleteType_Click"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>
@@ -286,11 +291,35 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- List of all tags-->
-                    <ListView Grid.Column="0" Margin="10">
+                    <ListView Grid.Column="0" Margin="10" ItemsSource="{Binding Tags}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60"></ColumnDefinition>
+                                            <ColumnDefinition Width="120"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
 
+                                        <Rectangle Width="40" Height="40" Grid.Column="0" Grid.RowSpan="3">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="{Binding Colour}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        
+                                        <TextBlock Grid.Column="1" Grid.Row="0" FontWeight="Bold">Label:</TextBlock>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Label}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="Bold">Description:</TextBlock>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Description}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="2" FontWeight="Bold">Color:</TextBlock>
+                                        <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Colour}" />
+                                    </Grid>
                                 </WrapPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
