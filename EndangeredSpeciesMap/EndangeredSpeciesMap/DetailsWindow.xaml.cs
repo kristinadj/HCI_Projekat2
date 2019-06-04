@@ -148,5 +148,10 @@ namespace EndangeredSpeciesMap
             SpecieTypes.RemoveAt(0); // removing label 'Select type of specie' from collection
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ViewTagsWindow editTags = new ViewTagsWindow(specie);
+            editTags.Show();
+        }
     }
 }
