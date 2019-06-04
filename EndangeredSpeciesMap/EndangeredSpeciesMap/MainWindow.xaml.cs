@@ -776,41 +776,32 @@ namespace EndangeredSpeciesMap
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<Specie> newSpecies = new ObservableCollection<Specie>();
-
             if (Filter.SelectedIndex != 0)
             {
                 if (Filter.SelectedIndex <= 6)
                 {
-                    foreach (Specie spec in Species)
+                    SpecieList.Items.Filter = item =>
                     {
-                        if (spec.Endangerment == (StatusOfEndangerment)Filter.SelectedIndex)
-                        {
-                            if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
-                                newSpecies.Add(spec);
-                        }
-                    }
+                        Specie specI = item as Specie;
+                        if (specI == null) return false;
+
+                        return specI.Endangerment == (StatusOfEndangerment)Filter.SelectedIndex;
+                    };
                 }
                 else
                 {
                     foreach (Specie spec in Species)
                     {
-                        if (spec.Endangerment != (StatusOfEndangerment)(Filter.SelectedIndex - 6))
+                        SpecieList.Items.Filter = item =>
                         {
-                            if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
-                                newSpecies.Add(spec);
-                        }
+                            Specie specI = item as Specie;
+                            if (specI == null) return false;
+
+                            return (specI.Endangerment != (StatusOfEndangerment)(Filter.SelectedIndex - 6));
+                        };
                     }
                 }
 
-            }
-
-            Species = new ObservableCollection<Specie>();
-            foreach (Specie spec in newSpecies)
-            {
-                MessageBoxResult success = MessageBox.Show(spec.Name, "Endangered Species", MessageBoxButton.OK);
-
-                Species.Add(spec);
             }
         }
 
