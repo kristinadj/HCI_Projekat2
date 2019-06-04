@@ -276,12 +276,31 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Name="Icon_TypeOfSpecie" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Stretch="Fill" Source="/EndangeredSpeciesMap;component/Images/picture.png" Margin="32,24,37,0"/>
-                        <Button Grid.Column="0" Grid.Row="4" x:Name="btnLoad" Content="_Load Icon" Margin="32,6,37,-22" Click="BtnLoad_Click"/>
+                        <Button Grid.Column="0" Grid.Row="4" x:Name="btnLoad" Content="_Load Icon" Margin="32,6,37,-22" Click="BtnLoad_Click">
+                            <Button.ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
+                                    This button allows user to upload a picture from the using device.
+                                    Picture will be used as type of species' picture.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button.ToolTip>
+                        </Button>
+                        
 
                         <TextBox Grid.Row="2" x:Name="Label_TypeOfSpecie" FontSize="14" Margin="172,24,10,64" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" l:HelpProvider.HelpKey="SpecieTypeLabel"/>
                         <TextBox Grid.Row="2" x:Name="Name_TypeOfSpecie" FontSize="14" Margin="172,59,10,32" Grid.ColumnSpan="2" l:HelpProvider.HelpKey="SpecieTypeName"/>
                         <TextBox Grid.Row="2" x:Name="Description_TypeOfSpecie" FontSize="14" Margin="172,91,10,-55" Grid.RowSpan="3" Grid.ColumnSpan="2" l:HelpProvider.HelpKey="SpecieTypeDescription"/>
-                        <Button Grid.Row="4" x:Name="btnAddType" Content="_Add new type of specie" Margin="41,67,10,-95" Grid.Column="1" Click="BtnAddType_Click"/>
+                        <Button Grid.Row="4" x:Name="btnAddType" Content="_Add new type of specie" Margin="41,67,10,-95" Grid.Column="1" Click="BtnAddType_Click">
+                            <Button.ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
+                                    After pushing this button - the new type of specie is added to the list of type of species.
+                                    This type of specie will be shown in the tables on the left side of window.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button.ToolTip>
+                        </Button>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -358,7 +377,16 @@
                                     </TransformGroup>
                                 </xctk:ColorPicker.RenderTransform>
                             </xctk:ColorPicker>
-                            <Button Grid.Row="4" x:Name="btnAddTag" Content="_Add new tag" Margin="99,16,99,-10" Click="BtnAddTag_Click" RenderTransformOrigin="0.5,0.5" ></Button>
+                            <Button Grid.Row="4" x:Name="btnAddTag" Content="_Add new tag" Margin="99,16,99,-10" Click="BtnAddTag_Click" RenderTransformOrigin="0.5,0.5" >
+                                <Button.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
+                                        After pushing this button - the new tag is added to the list of tags.
+                                        This tag will be shown in the table on the left side of window.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button.ToolTip>
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>

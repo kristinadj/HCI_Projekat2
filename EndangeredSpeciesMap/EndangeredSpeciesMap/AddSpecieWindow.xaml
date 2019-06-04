@@ -122,8 +122,6 @@
                                 <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
                                     After pushing this button - the new species is added to the list of species.
                                     This species will be shown in the tables of species in the main window.
-                                    User is being redirected to the main window after pushing this button.
-
                                 </TextBlock>
                             </StackPanel>
                         </Button.ToolTip>
