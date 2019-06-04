@@ -168,5 +168,8 @@
     <Resource Include="gobackbutton.png" />
     <Resource Include="loadicon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="editspecies.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

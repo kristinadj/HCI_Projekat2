@@ -115,7 +115,7 @@
                     <Button  Grid.Row="6" Content="_Edit specie" Margin="101,70,41,144" RenderTransformOrigin="0.626,-0.345" Click="Button_Click">
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
-                                <Image Margin="5" Source="/addnewspecies.png"></Image>
+                                <Image Margin="5" Source="/editspecies.png"></Image>
                                 <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
                                     After pushing this button - the changes are saved.
                                     This species will be shown in the tables of species in the main window.
