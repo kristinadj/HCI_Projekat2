@@ -878,6 +878,16 @@ namespace EndangeredSpeciesMap
         private void DeleteTag_Click(object sender, RoutedEventArgs e)
         {
             Tag selected = (Tag)TagList.SelectedItem;
+            foreach (Specie sp in Species)
+            {
+                foreach (Tag tag in sp.Tags)
+                if (tag.Label.Equals(selected.Label))
+                {
+                    MessageBoxResult result = MessageBox.Show("Specie tag is connected to some specie!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+            
             Tags.Remove(selected);
             saveTags();
         }

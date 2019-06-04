@@ -39,7 +39,7 @@ namespace EndangeredSpeciesMap
         {
             if (MainWindow.Tags.Count == 0)
             {
-                MessageBoxResult result = MessageBox.Show("There are not tags to bee added!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBoxResult result = MessageBox.Show("There are not tags to be added!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             MainWindow.Species.Remove(Specie);
@@ -54,7 +54,7 @@ namespace EndangeredSpeciesMap
             MainWindow.Species.Add(newSpecie);
             MainWindow.saveSpecies();
 
-            MessageBoxResult success = MessageBox.Show("You have successfully added tags!", "Endangered Species", MessageBoxButton.OK);
+            MessageBoxResult success = MessageBox.Show("You have successfully edited tags!", "Endangered Species", MessageBoxButton.OK);
 
         }
     }

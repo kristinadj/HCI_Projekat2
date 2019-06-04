@@ -45,7 +45,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Grid.Row="1" x:Name="btnAddTag" Content="_Add tags to specie" Click="btnAddTag_Click" RenderTransformOrigin="0.612,0.32" Margin="122,0,152,8" >
+        <Button Grid.Row="1" x:Name="btnAddTag" Content="_Add/Remove tags to specie" Click="btnAddTag_Click" RenderTransformOrigin="0.612,0.32" Margin="122,0,152,8" >
         </Button>
 
     </Grid>
