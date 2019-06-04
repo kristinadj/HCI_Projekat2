@@ -762,37 +762,16 @@ namespace EndangeredSpeciesMap
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
-            if (File.Exists(@"..\..\Data\species.json"))
+            SpecieList.Items.Filter = item =>
             {
-                String json = System.IO.File.ReadAllText(@"..\..\Data\species.json");
-                Species = JsonConvert.DeserializeObject<ObservableCollection<Specie>>(json);
-            }
-            else
-            {
-                Species = new ObservableCollection<Specie>();
-            }
+                Specie specI = item as Specie;
+                if (specI == null) return false;
 
-            ObservableCollection<Specie> newSpecies = new ObservableCollection<Specie>();
+                if (SearchParam.Text == "Search...")
+                    return true;
 
-       
-            foreach (Specie spec in Species)
-            {
-                if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
-                {
-                    newSpecies.Add(spec);
-                }
-            }
-
-
-            Species = new ObservableCollection<Specie>();
-            foreach (Specie spec in newSpecies)
-            {
-                MessageBoxResult success = MessageBox.Show(spec.Name, "Endangered Species", MessageBoxButton.OK);
-
-                Species.Add(spec);
-            }
-
+                return specI.ID.Contains(SearchParam.Text) || specI.Name.Contains(SearchParam.Text);
+            };
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -850,6 +829,7 @@ namespace EndangeredSpeciesMap
         {
             btnAddSpecie.Background = new SolidColorBrush(Color.FromRgb(32, 64, 128));
             Title = param;
+        }
 
         private void DeleteTag_Click(object sender, RoutedEventArgs e)
         {
