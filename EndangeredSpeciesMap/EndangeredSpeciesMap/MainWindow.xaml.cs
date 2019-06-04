@@ -342,34 +342,38 @@ namespace EndangeredSpeciesMap
         /* Drag and drop */
         private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            startPoint = e.GetPosition(null);
+            if (OnMap.IsChecked == false)
+                startPoint = e.GetPosition(null);
 
         }
 
         private void ListView_MouseMove(object sender, MouseEventArgs e)
         {
-            Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            if (OnMap.IsChecked == false)
             {
-                // Get the dragged ListViewItem
-                ListView listView = sender as ListView;
-                ListViewItem listViewItem =
-                    FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+                Point mousePos = e.GetPosition(null);
+                Vector diff = startPoint - mousePos;
 
-                // Find the data behind the ListViewItem
-                Specie specie = (Specie)listView.ItemContainerGenerator.
-                    ItemFromContainer(listViewItem);
+                if (e.LeftButton == MouseButtonState.Pressed &&
+                    (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+                {
+                    // Get the dragged ListViewItem
+                    ListView listView = sender as ListView;
+                    ListViewItem listViewItem =
+                        FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
 
-                Image image = new Image();
-                image.Source = new BitmapImage(new Uri(specie.Icon.ToString(), UriKind.Absolute));
+                    // Find the data behind the ListViewItem
+                    Specie specie = (Specie)listView.ItemContainerGenerator.
+                        ItemFromContainer(listViewItem);
 
-                // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("myFormat", specie);
-                DragDrop.DoDragDrop(image, dragData, DragDropEffects.Move);
+                    Image image = new Image();
+                    image.Source = new BitmapImage(new Uri(specie.Icon.ToString(), UriKind.Absolute));
+
+                    // Initialize the drag & drop operation
+                    DataObject dragData = new DataObject("myFormat", specie);
+                    DragDrop.DoDragDrop(image, dragData, DragDropEffects.Move);
+                }
             }
         }
 
@@ -404,19 +408,23 @@ namespace EndangeredSpeciesMap
                 // Add to list for specific map
                 TabItem tab = Tabs.SelectedItem as TabItem;
                 if (tab.Header.Equals("Map #1")) {
-                    SpeciesOnMap1.Add(specie);
+                    if(!SpeciesOnMap1.Contains(specie))
+                        SpeciesOnMap1.Add(specie);
                 }   
                 else if (tab.Header.Equals("Map #2"))
                 {
-                    SpeciesOnMap2.Add(specie);
+                    if (!SpeciesOnMap2.Contains(specie))
+                        SpeciesOnMap2.Add(specie);
                 } 
                 else if (tab.Header.Equals("Map #3"))
                 {
-                    SpeciesOnMap3.Add(specie);
+                    if (!SpeciesOnMap3.Contains(specie))
+                        SpeciesOnMap3.Add(specie);
                 } 
                 else
                 {
-                    SpeciesOnMap4.Add(specie);
+                    if (!SpeciesOnMap4.Contains(specie))
+                        SpeciesOnMap4.Add(specie);
                 }
                 Species.Remove(specie);
 
@@ -762,76 +770,78 @@ namespace EndangeredSpeciesMap
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
-            if (File.Exists(@"..\..\Data\species.json"))
+            if (OnMap.IsChecked == true)
             {
-                String json = System.IO.File.ReadAllText(@"..\..\Data\species.json");
-                Species = JsonConvert.DeserializeObject<ObservableCollection<Specie>>(json);
+                if (Tabs.SelectedIndex == 0)
+                    SpecieList.ItemsSource = SpeciesOnMap1;
+                else if (Tabs.SelectedIndex == 1)
+                    SpecieList.ItemsSource = SpeciesOnMap2;
+                else if (Tabs.SelectedIndex == 2)
+                    SpecieList.ItemsSource = SpeciesOnMap3;
+                else if (Tabs.SelectedIndex == 3)
+                    SpecieList.ItemsSource = SpeciesOnMap4;
+
+                
             }
-            else
-            {
-                Species = new ObservableCollection<Specie>();
-            }
-
-            ObservableCollection<Specie> newSpecies = new ObservableCollection<Specie>();
-
-       
-            foreach (Specie spec in Species)
-            {
-                if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
-                {
-                    newSpecies.Add(spec);
-                }
+            else {
+                SpecieList.ItemsSource = Species;
             }
 
-
-            Species = new ObservableCollection<Specie>();
-            foreach (Specie spec in newSpecies)
+            SpecieList.Items.Filter = item =>
             {
-                MessageBoxResult success = MessageBox.Show(spec.Name, "Endangered Species", MessageBoxButton.OK);
+                Specie specI = item as Specie;
+                if (specI == null) return false;
 
-                Species.Add(spec);
-            }
+                if (SearchParam.Text == "Search...")
+                    return true;
 
+                return specI.ID.Contains(SearchParam.Text) || specI.Name.Contains(SearchParam.Text);
+            };
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<Specie> newSpecies = new ObservableCollection<Specie>();
+            if (OnMap.IsChecked == true)
+            {
+                if (Tabs.SelectedIndex == 0)
+                    SpecieList.ItemsSource = SpeciesOnMap1;
+                else if (Tabs.SelectedIndex == 1)
+                    SpecieList.ItemsSource = SpeciesOnMap2;
+                else if (Tabs.SelectedIndex == 2)
+                    SpecieList.ItemsSource = SpeciesOnMap3;
+                else if (Tabs.SelectedIndex == 3)
+                    SpecieList.ItemsSource = SpeciesOnMap4;
+            }
+            else {
+                SpecieList.ItemsSource = Species;
+            }
 
             if (Filter.SelectedIndex != 0)
             {
                 if (Filter.SelectedIndex <= 6)
                 {
-                    foreach (Specie spec in Species)
+                    SpecieList.Items.Filter = item =>
                     {
-                        if (spec.Endangerment == (StatusOfEndangerment)Filter.SelectedIndex)
-                        {
-                            if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
-                                newSpecies.Add(spec);
-                        }
-                    }
+                        Specie specI = item as Specie;
+                        if (specI == null) return false;
+
+                        return specI.Endangerment == (StatusOfEndangerment)Filter.SelectedIndex;
+                    };
                 }
                 else
                 {
                     foreach (Specie spec in Species)
                     {
-                        if (spec.Endangerment != (StatusOfEndangerment)(Filter.SelectedIndex - 6))
+                        SpecieList.Items.Filter = item =>
                         {
-                            if (spec.ID.Contains(SearchParam.Text) || spec.Name.Contains(SearchParam.Text))
-                                newSpecies.Add(spec);
-                        }
+                            Specie specI = item as Specie;
+                            if (specI == null) return false;
+
+                            return (specI.Endangerment != (StatusOfEndangerment)(Filter.SelectedIndex - 6));
+                        };
                     }
                 }
 
-            }
-
-            Species = new ObservableCollection<Specie>();
-            foreach (Specie spec in newSpecies)
-            {
-                MessageBoxResult success = MessageBox.Show(spec.Name, "Endangered Species", MessageBoxButton.OK);
-
-                Species.Add(spec);
             }
         }
 
@@ -850,6 +860,7 @@ namespace EndangeredSpeciesMap
         {
             btnAddSpecie.Background = new SolidColorBrush(Color.FromRgb(32, 64, 128));
             Title = param;
+        }
 
         private void DeleteTag_Click(object sender, RoutedEventArgs e)
         {
