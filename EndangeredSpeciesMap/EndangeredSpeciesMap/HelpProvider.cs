@@ -26,7 +26,13 @@ namespace EndangeredSpeciesMap
             //NOOP
         }
 
-        public static void ShowHelp(string key, MainWindow originator)
+        public static void ShowHelpMainWin(string key, MainWindow originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
+        public static void ShowHelpAddSpecie(string key, AddSpecieWindow originator)
         {
             HelpViewer hh = new HelpViewer(key, originator);
             hh.Show();
