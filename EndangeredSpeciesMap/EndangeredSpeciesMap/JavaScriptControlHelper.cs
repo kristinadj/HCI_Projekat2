@@ -17,10 +17,5 @@ namespace EndangeredSpeciesMap
         {
             prozor = w;
         }
-
-        public void RunFromJavascript(string param)
-        {
-            prozor.doThings(param);
-        }
     }
 }

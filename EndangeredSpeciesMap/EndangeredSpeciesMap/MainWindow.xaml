@@ -11,7 +11,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>
-    
+
     <DockPanel>
         <!-- Menu bar -->
         <Menu DockPanel.Dock="Top">
@@ -44,8 +44,8 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Search -->
-                    <TextBox x:Name="SearchParam" FontSize="14" Margin="10,10,56,5" Grid.ColumnSpan="6" l:HelpProvider.HelpKey="Indeks"/>
-                    <Button  Cursor="Hand" ToolTip="Search" Margin="52,10,10,5" Grid.Column="5" Click="Button_Click_1">
+                    <TextBox x:Name="SearchParam" FontSize="14" Margin="10,10,56,5" Grid.ColumnSpan="6" l:HelpProvider.HelpKey="SearchSpecieTextBox"/>
+                    <Button  Cursor="Hand" ToolTip="Search" Margin="52,10,10,5" Grid.Column="5" Click="Button_Click_1" l:HelpProvider.HelpKey="SearchSpecieButton">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="/EndangeredSpeciesMap;component/Images/search.png"/>
@@ -54,7 +54,7 @@
                     </Button>
 
                     <!-- FIlter -->
-                    <ComboBox Name="Filter" Grid.Column="0" Grid.Row="1" Margin="10,5,56,10" Grid.ColumnSpan="6">
+                    <ComboBox Name="Filter" Grid.Column="0" Grid.Row="1" Margin="10,5,56,10" Grid.ColumnSpan="6" l:HelpProvider.HelpKey="FilterSpecieComboBox">
                         <ComboBoxItem IsSelected="True">No filter</ComboBoxItem>
                         <ComboBoxItem>Critically endangered</ComboBoxItem>
                         <ComboBoxItem>Endangered</ComboBoxItem>
@@ -67,7 +67,7 @@
                         <ComboBoxItem>Habituated</ComboBoxItem>
                     </ComboBox>
 
-                    <Button  Cursor="Hand" ToolTip="Filter" Margin="52,5,10,10" Grid.Row="1" Grid.Column="5" Click="Button_Click_2">
+                    <Button  Cursor="Hand" ToolTip="Filter" Margin="52,5,10,10" Grid.Row="1" Grid.Column="5" Click="Button_Click_2" l:HelpProvider.HelpKey="FilterSpeciesButton">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="/EndangeredSpeciesMap;component/Images/filter.png"/>
@@ -75,7 +75,7 @@
                         </Button.Template>
                     </Button>
 
-                    <CheckBox Grid.Column="0" Grid.Row="2" Margin="10,0,10,14" Grid.ColumnSpan="2">On map</CheckBox>
+                    <CheckBox Grid.Column="0" Grid.Row="2" Margin="10,0,10,14" Grid.ColumnSpan="2" l:HelpProvider.HelpKey="OnMap">On map</CheckBox>
 
                     <!-- List of Species -->
                     <ListView x:Name="SpecieList" Grid.Column="0" Grid.Row="2" Margin="10,27,10,0" Grid.RowSpan="3" Grid.ColumnSpan="6" ItemsSource="{Binding Species}" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove">
@@ -119,7 +119,7 @@
                     </ListView>
 
                     <!-- Add button -->
-                    <Button x:Name="btnAddSpecie" Grid.Column="0" Grid.Row="5" Margin="10,5,64,10" RenderTransformOrigin="0,0.48" Grid.ColumnSpan="4" Click="Button_Click">
+                    <Button x:Name="btnAddSpecie" Grid.Column="0" Grid.Row="5" Margin="10,5,64,10" RenderTransformOrigin="0,0.48" Grid.ColumnSpan="4" Click="Button_Click" l:HelpProvider.HelpKey="ToAddSpecieWin">
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
                                 <Image Margin="5" Source="/EndangeredSpeciesMap;component/Images/addspecies.png"></Image>
@@ -276,12 +276,31 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Name="Icon_TypeOfSpecie" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Stretch="Fill" Source="/EndangeredSpeciesMap;component/Images/picture.png" Margin="32,24,37,0"/>
-                        <Button Grid.Column="0" Grid.Row="4" x:Name="btnLoad" Content="_Load Icon" Margin="32,6,37,-22" Click="BtnLoad_Click"/>
+                        <Button Grid.Column="0" Grid.Row="4" x:Name="btnLoad" Content="_Load Icon" Margin="32,6,37,-22" Click="BtnLoad_Click">
+                            <Button.ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
+                                    This button allows user to upload a picture from the using device.
+                                    Picture will be used as type of species' picture.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button.ToolTip>
+                        </Button>
 
-                        <TextBox Grid.Row="2" x:Name="Label_TypeOfSpecie" FontSize="14" Margin="172,24,10,64" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
-                        <TextBox Grid.Row="2" x:Name="Name_TypeOfSpecie" FontSize="14" Margin="172,59,10,32" Grid.ColumnSpan="2"/>
-                        <TextBox Grid.Row="2" x:Name="Description_TypeOfSpecie" FontSize="14" Margin="172,91,10,-55" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
-                        <Button Grid.Row="4" x:Name="btnAddType" Content="_Add new type of specie" Margin="41,67,10,-95" Grid.Column="1" Click="BtnAddType_Click"/>
+
+                        <TextBox Grid.Row="2" x:Name="Label_TypeOfSpecie" FontSize="14" Margin="172,24,10,64" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" l:HelpProvider.HelpKey="SpecieTypeLabel"/>
+                        <TextBox Grid.Row="2" x:Name="Name_TypeOfSpecie" FontSize="14" Margin="172,59,10,32" Grid.ColumnSpan="2" l:HelpProvider.HelpKey="SpecieTypeName"/>
+                        <TextBox Grid.Row="2" x:Name="Description_TypeOfSpecie" FontSize="14" Margin="172,91,10,-55" Grid.RowSpan="3" Grid.ColumnSpan="2" l:HelpProvider.HelpKey="SpecieTypeDescription"/>
+                        <Button Grid.Row="4" x:Name="btnAddType" Content="_Add new type of specie" Margin="41,67,10,-95" Grid.Column="1" Click="BtnAddType_Click">
+                            <Button.ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
+                                    After pushing this button - the new type of specie is added to the list of type of species.
+                                    This type of specie will be shown in the tables on the left side of window.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button.ToolTip>
+                        </Button>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -321,7 +340,7 @@
                                                 <SolidColorBrush Color="{Binding Colour}" />
                                             </Rectangle.Fill>
                                         </Rectangle>
-                                        
+
                                         <TextBlock Grid.Column="1" Grid.Row="0" FontWeight="Bold">Label:</TextBlock>
                                         <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Label}" />
                                         <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="Bold">Description:</TextBlock>
@@ -345,10 +364,10 @@
                                 <RowDefinition Height="36"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBox  Grid.Row="0" x:Name="Label_Tag" FontSize="14" Margin="99,20,99,10" />
-                            <TextBox  Grid.Row="1" x:Name="Description_Tag" FontSize="14" Margin="99,0,99,10" />
+                            <TextBox  Grid.Row="0" x:Name="Label_Tag" FontSize="14" Margin="99,20,99,10" l:HelpProvider.HelpKey="TagLabel"/>
+                            <TextBox  Grid.Row="1" x:Name="Description_Tag" FontSize="14" Margin="99,0,99,10" l:HelpProvider.HelpKey="TagDescription"/>
                             <Label Grid.Row="2" Content="Pick a colour:" Margin="99,0"/>
-                            <xctk:ColorPicker Grid.Row="3" Name="cp" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" Margin="0,3,104,1" HorizontalAlignment="Right" Width="184" RenderTransformOrigin="0.952,0.781">
+                            <xctk:ColorPicker Grid.Row="3" Name="cp" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" Margin="0,3,104,1" HorizontalAlignment="Right" Width="184" RenderTransformOrigin="0.952,0.781" l:HelpProvider.HelpKey="TagColour">
                                 <xctk:ColorPicker.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -358,7 +377,16 @@
                                     </TransformGroup>
                                 </xctk:ColorPicker.RenderTransform>
                             </xctk:ColorPicker>
-                            <Button Grid.Row="4" x:Name="btnAddTag" Content="_Add new tag" Margin="99,16,99,-10" Click="BtnAddTag_Click" RenderTransformOrigin="0.5,0.5" ></Button>
+                            <Button Grid.Row="4" x:Name="btnAddTag" Content="_Add new tag" Margin="99,16,99,-10" Click="BtnAddTag_Click" RenderTransformOrigin="0.5,0.5" >
+                                <Button.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
+                                        After pushing this button - the new tag is added to the list of tags.
+                                        This tag will be shown in the table on the left side of window.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button.ToolTip>
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>

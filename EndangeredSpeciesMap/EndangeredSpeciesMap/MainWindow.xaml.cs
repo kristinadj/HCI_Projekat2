@@ -850,6 +850,7 @@ namespace EndangeredSpeciesMap
         {
             btnAddSpecie.Background = new SolidColorBrush(Color.FromRgb(32, 64, 128));
             Title = param;
+        }
 
         private void DeleteTag_Click(object sender, RoutedEventArgs e)
         {
