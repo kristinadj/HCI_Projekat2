@@ -37,6 +37,11 @@ namespace EndangeredSpeciesMap
 
         private void btnAddTag_Click(object sender, RoutedEventArgs e)
         {
+            if (MainWindow.Tags.Count == 0)
+            {
+                MessageBoxResult result = MessageBox.Show("There are not tags to bee added!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             MainWindow.Species.Remove(Specie);
             Specie newSpecie = Specie;
             newSpecie.Tags.Clear();
