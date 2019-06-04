@@ -30,7 +30,7 @@
                     <Button Grid.Row="1" x:Name="btnLoad" Content="_Load Icon" Margin="84,0,98,10" RenderTransformOrigin="0.569,0.276" Click="BtnLoad_Click">
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
-                                <Image Margin="5" Source="/loadicon.png"></Image>
+                                <Image Margin="5" Source="/EndangeredSpeciesMap;component/Images/loadicon.png"></Image>
                                 <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
                                     This button allows user to upload a picture from the using device.
                                     Picture will be used as species' picture.
@@ -42,7 +42,7 @@
                     <Button Grid.Row="2" x:Name="btnBack" Margin="32,75,130,138" RenderTransformOrigin="0.569,0.276" Click="BtnBack_Click">
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
-                                <Image Margin="5" Source="/gobackbutton.png"></Image>
+                                <Image Margin="5" Source="/EndangeredSpeciesMap;component/Images/gobackbutton.png"></Image>
                                 <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
                                     This is a "Go Back" button. If this button is clicked - adding new species is being cancelled
                                     and user is redirected back to the main window of the application.
@@ -115,7 +115,7 @@
                     <Button  Grid.Row="6" Content="_Add new specie" Margin="101,70,41,144" RenderTransformOrigin="0.626,-0.345" Click="Button_Click" >
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
-                                <Image Margin="5" Source="/addnewspecies.png"></Image>
+                                <Image Margin="5" Source="/EndangeredSpeciesMap;component/Images/addnewspecies.png"></Image>
                                 <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
                                     After pushing this button - the new species is added to the list of species.
                                     This species will be shown in the tables of species in the main window.

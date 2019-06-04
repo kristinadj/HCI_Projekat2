@@ -118,7 +118,7 @@
                     <Button Grid.Column="0" Grid.Row="5" Margin="10,5,64,10" RenderTransformOrigin="0,0.48" Grid.ColumnSpan="4" Click="Button_Click">
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
-                                <Image Margin="5" Source="/addspecies.png"></Image>
+                                <Image Margin="5" Source="/EndangeredSpeciesMap;component/Images/addspecies.png"></Image>
                                 <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
                                     This is a button that redirects user to the Add Species Window.
                                 </TextBlock>
