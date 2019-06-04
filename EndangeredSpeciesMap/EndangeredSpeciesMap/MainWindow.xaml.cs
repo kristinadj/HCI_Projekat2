@@ -709,7 +709,8 @@ namespace EndangeredSpeciesMap
         private void EditSpecie_Click(object sender, RoutedEventArgs e)
         {
             Specie selected = (Specie)SpecieList.SelectedItem;
-
+            EditSpecieWindow editSpecieWindow = new EditSpecieWindow(selected);
+            editSpecieWindow.Show();
         }
 
         private void DeleteSpecie_Click(object sender, RoutedEventArgs e)

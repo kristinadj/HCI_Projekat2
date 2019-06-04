@@ -75,6 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="EditSpecieWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AddSpecieWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -83,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="EditSpecieWindow.xaml.cs">
+      <DependentUpon>EditSpecieWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddSpecieWindow.xaml.cs">
       <DependentUpon>AddSpecieWindow.xaml</DependentUpon>
     </Compile>
