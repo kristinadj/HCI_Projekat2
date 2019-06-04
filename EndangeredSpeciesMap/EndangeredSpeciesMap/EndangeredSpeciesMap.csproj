@@ -137,7 +137,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\search.png" />
@@ -159,9 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="addspecies.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

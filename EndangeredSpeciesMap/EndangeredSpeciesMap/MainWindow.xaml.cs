@@ -834,5 +834,12 @@ namespace EndangeredSpeciesMap
                 Species.Add(spec);
             }
         }
+
+        private void DeleteTag_Click(object sender, RoutedEventArgs e)
+        {
+            Tag selected = (Tag)TagList.SelectedItem;
+            Tags.Remove(selected);
+            saveTags();
+        }
     }
 }

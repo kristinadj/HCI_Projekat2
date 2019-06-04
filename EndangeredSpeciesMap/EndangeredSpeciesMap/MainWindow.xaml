@@ -118,7 +118,7 @@
                     <Button Grid.Column="0" Grid.Row="5" Margin="10,5,64,10" RenderTransformOrigin="0,0.48" Grid.ColumnSpan="4" Click="Button_Click">
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
-                                <Image Margin="5" Source="/addspecies.png"></Image>
+                                <Image Margin="5" Source="/EndangeredSpeciesMap;component/Images/addspecies.png"></Image>
                                 <TextBlock Margin="5" TextWrapping="Wrap" MaxWidth="100">
                                     This is a button that redirects user to the Add Species Window.
                                 </TextBlock>
@@ -291,7 +291,12 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- List of all tags-->
-                    <ListView Grid.Column="0" Margin="10" ItemsSource="{Binding Tags}">
+                    <ListView Name="TagList"  Grid.Column="0" Margin="10" ItemsSource="{Binding Tags}">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete tag" Name="DeleteTag" Click="DeleteTag_Click"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>
