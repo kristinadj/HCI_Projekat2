@@ -28,7 +28,7 @@ namespace EndangeredSpeciesMap.Model
         public float TouristIncome { get; set; }
         public DateTime DiscoveryDate { get; set; }
 
-        public List<String> Tags = new List<String>(); // String - Tag unique label
+        public List<Tag> Tags = new List<Tag>(); 
         public double X { get; set; }
         public double Y { get; set; }
     }

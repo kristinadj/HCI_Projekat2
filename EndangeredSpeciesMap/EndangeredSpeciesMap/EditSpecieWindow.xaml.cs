@@ -16,6 +16,7 @@ namespace EndangeredSpeciesMap
     {
         private Specie specie;
         public ObservableCollection<SpecieType> SpecieTypes { get; set; }
+        public ObservableCollection<Tag> Tags { get; set; }
         public EditSpecieWindow(Specie specie)
         {
             this.specie = specie;
@@ -34,7 +35,7 @@ namespace EndangeredSpeciesMap
             {
                 Label = "Select type of specie"
             });
-            
+
             foreach (SpecieType type in SpecieTypes) {
                 if (type.Label == specie.SpecieType) {
                     SpecieType.SelectedItem = type;
@@ -232,6 +233,18 @@ namespace EndangeredSpeciesMap
                 // display image in picture box  
                 Icon.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            EditTags editTags = new EditTags(specie);
+            editTags.Show();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            ViewTagsWindow editTags = new ViewTagsWindow(specie);
+            editTags.Show();
         }
     }
 }
