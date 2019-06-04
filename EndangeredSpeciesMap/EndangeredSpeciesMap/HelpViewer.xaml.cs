@@ -20,29 +20,19 @@ namespace EndangeredSpeciesMap
     /// </summary>
     public partial class HelpViewer : Window
     {
-        private JavaScriptControlHelperMain jwMain;
-        private JavaScriptControlHelperAddSpecie jwAddSpecie;
-        public HelpViewer(string key, Window originator)
+        private JavaScriptControlHelper ch;
+        public HelpViewer(string key, MainWindow originator)
         {
             InitializeComponent();
             string curDir = Directory.GetCurrentDirectory();
-            string path = String.Format("{0}\\Help\\{1}.htm", curDir, key);
+            string path = String.Format("{0}/Help/{1}.htm", curDir, key);
             if (!File.Exists(path))
             {
-                key = "Error";
+                key = "error";
             }
-            Uri u = new Uri(String.Format("file:///{0}\\Help\\{1}.htm", curDir, key));
-
-            if (originator is MainWindow)
-            {
-                jwMain = new JavaScriptControlHelperMain((MainWindow)originator);
-                wbHelp.ObjectForScripting = jwMain;
-            } else if (originator is AddSpecieWindow)
-            {
-                jwAddSpecie = new JavaScriptControlHelperAddSpecie((AddSpecieWindow)originator);
-                wbHelp.ObjectForScripting = jwAddSpecie;
-            }
-            
+            Uri u = new Uri(String.Format("file:///{0}/Help/{1}.htm", curDir, key));
+            ch = new JavaScriptControlHelper(originator);
+            wbHelp.ObjectForScripting = ch;
             wbHelp.Navigate(u);
 
         }

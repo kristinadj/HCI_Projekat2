@@ -172,21 +172,7 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Help\Error.htm" />
-    <Content Include="Help\FilterSpecieComboBox.htm" />
-    <Content Include="Help\FilterSpeciesButton.htm" />
-    <Content Include="Help\LoadSpecieIcon.htm" />
-    <Content Include="Help\MainWindow.htm" />
-    <Content Include="Help\OnMap.htm" />
-    <Content Include="Help\SearchSpecieButton.htm" />
-    <Content Include="Help\SearchSpecieTextBox.htm" />
-    <Content Include="Help\SpecieTypeDescription.htm" />
-    <Content Include="Help\SpecieTypeLabel.htm" />
-    <Content Include="Help\SpecieTypeName.htm" />
-    <Content Include="Help\TagColour.htm" />
-    <Content Include="Help\TagDescription.htm" />
-    <Content Include="Help\TagLabel.htm" />
-    <Content Include="Help\ToAddSpecieWin.htm" />
+    <Content Include="Help\Indeks.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
