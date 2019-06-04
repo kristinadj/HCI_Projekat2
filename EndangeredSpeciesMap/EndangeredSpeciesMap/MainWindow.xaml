@@ -295,7 +295,12 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- List of all tags-->
-                    <ListView Grid.Column="0" Margin="10" ItemsSource="{Binding Tags}">
+                    <ListView Name="TagList"  Grid.Column="0" Margin="10" ItemsSource="{Binding Tags}">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete tag" Name="DeleteTag" Click="DeleteTag_Click"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>
