@@ -762,16 +762,21 @@ namespace EndangeredSpeciesMap
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            SpecieList.ItemsSource = Species;
-            if (OnMap.IsChecked == true) {
-                if(Tabs.SelectedIndex == 0)
+            if (OnMap.IsChecked == true)
+            {
+                if (Tabs.SelectedIndex == 0)
                     SpecieList.ItemsSource = SpeciesOnMap1;
-                else if(Tabs.SelectedIndex == 1)
+                else if (Tabs.SelectedIndex == 1)
                     SpecieList.ItemsSource = SpeciesOnMap2;
                 else if (Tabs.SelectedIndex == 2)
                     SpecieList.ItemsSource = SpeciesOnMap3;
                 else if (Tabs.SelectedIndex == 3)
                     SpecieList.ItemsSource = SpeciesOnMap4;
+
+                
+            }
+            else {
+                SpecieList.ItemsSource = Species;
             }
 
             SpecieList.Items.Filter = item =>
@@ -788,6 +793,21 @@ namespace EndangeredSpeciesMap
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            if (OnMap.IsChecked == true)
+            {
+                if (Tabs.SelectedIndex == 0)
+                    SpecieList.ItemsSource = SpeciesOnMap1;
+                else if (Tabs.SelectedIndex == 1)
+                    SpecieList.ItemsSource = SpeciesOnMap2;
+                else if (Tabs.SelectedIndex == 2)
+                    SpecieList.ItemsSource = SpeciesOnMap3;
+                else if (Tabs.SelectedIndex == 3)
+                    SpecieList.ItemsSource = SpeciesOnMap4;
+            }
+            else {
+                SpecieList.ItemsSource = Species;
+            }
+
             if (Filter.SelectedIndex != 0)
             {
                 if (Filter.SelectedIndex <= 6)
