@@ -18,7 +18,9 @@
             <MenuItem Header="_Help">
                 <MenuItem x:Name="TipsItem" Header="_Tips" IsCheckable="True"></MenuItem>
             </MenuItem>
-            <MenuItem Header="_Tutorial"></MenuItem>
+            <MenuItem Header="_Tutorial" >
+                <MenuItem Header="_Show Video" Click="ShowTutorial"></MenuItem>
+            </MenuItem>
         </Menu>
 
         <TabControl>
@@ -91,7 +93,7 @@
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="60"></ColumnDefinition>
-                                            <ColumnDefinition Width="120"></ColumnDefinition>
+                                            <ColumnDefinition Width="40"></ColumnDefinition>
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
@@ -238,7 +240,7 @@
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="60"></ColumnDefinition>
-                                            <ColumnDefinition Width="120"></ColumnDefinition>
+                                            <ColumnDefinition Width="70"></ColumnDefinition>
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>

@@ -764,6 +764,15 @@ namespace EndangeredSpeciesMap
         private void DeleteType_Click(object sender, RoutedEventArgs e)
         {
             SpecieType selected = (SpecieType)Types.SelectedItem;
+
+            foreach (Specie sp in Species)
+            {
+                if (sp.SpecieType.Equals(selected.Label))
+                {
+                    MessageBoxResult result = MessageBox.Show("Specie type is connected to some specie!", "Endangered Species", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
             SpecieTypes.Remove(selected);
             saveTypesOfSpecies();
         }
@@ -871,6 +880,12 @@ namespace EndangeredSpeciesMap
             Tag selected = (Tag)TagList.SelectedItem;
             Tags.Remove(selected);
             saveTags();
+        }
+
+        public void ShowTutorial(object sender, RoutedEventArgs e)
+        {
+            ShowTutorial win = new ShowTutorial();
+            win.Show();
         }
     }
 }
