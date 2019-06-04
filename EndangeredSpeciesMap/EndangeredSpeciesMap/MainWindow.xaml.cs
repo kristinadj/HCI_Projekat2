@@ -841,7 +841,7 @@ namespace EndangeredSpeciesMap
             if (focusedControl is DependencyObject)
             {
                 string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
-                HelpProvider.ShowHelp(str, this);
+                HelpProvider.ShowHelpMainWin(str, this);
 
             }
         }

@@ -10,10 +10,21 @@ namespace EndangeredSpeciesMap
 {
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [ComVisible(true)]
-    public class JavaScriptControlHelper
+    public class JavaScriptControlHelperMain
     {
         MainWindow prozor;
-        public JavaScriptControlHelper(MainWindow w)
+        public JavaScriptControlHelperMain(MainWindow w)
+        {
+            prozor = w;
+        }
+    }
+
+    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+    [ComVisible(true)]
+    public class JavaScriptControlHelperAddSpecie
+    {
+        AddSpecieWindow prozor;
+        public JavaScriptControlHelperAddSpecie(AddSpecieWindow w)
         {
             prozor = w;
         }

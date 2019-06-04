@@ -11,6 +11,7 @@
         <CommandBinding Command="NavigationCommands.BrowseForward" CanExecute="BrowseForward_CanExecute" Executed="BrowseForward_Executed" />
     </Window.CommandBindings>
     <DockPanel>
+        
         <WebBrowser Name="wbHelp" Navigating="wbHelp_Navigating"></WebBrowser>
     </DockPanel>
 </Window>
