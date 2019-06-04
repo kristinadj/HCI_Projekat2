@@ -112,7 +112,8 @@
                     <Label Grid.Row="5" Margin="-2,0,47,10" RenderTransformOrigin="0.5,0.5">Date of discovery:</Label>
                     <DatePicker x:Name="DiscoveryDate" Grid.Row="6" Height="25" HorizontalAlignment="Left" Margin="2,0,0,0" VerticalAlignment="Top" Width="209" RenderTransformOrigin="0.535,1.34" />
 
-                    <Button  Grid.Row="6" Content="_Edit specie" Margin="101,70,41,144" RenderTransformOrigin="0.626,-0.345" Click="Button_Click">
+                    <ListView x:Name="SpecieTags" Grid.Row="6" ItemsSource="{Binding Tags}"  SelectionMode="Extended"></ListView>
+                    <Button  Grid.Row="7" Content="_Edit specie" Margin="101,70,41,144" RenderTransformOrigin="0.626,-0.345" Click="Button_Click">
                         <Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
                                 <Image Margin="5" Source="/EndangeredSpeciesMap;component/Images/editspecies.png"></Image>
