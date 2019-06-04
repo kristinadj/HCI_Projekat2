@@ -107,6 +107,7 @@
                         </ListView.ItemTemplate>
                         <ListBox.ContextMenu>
                             <ContextMenu>
+                                <MenuItem Header="Details" Name="Details" Click="Details_Click"/>
                                 <MenuItem Header="Edit specie" Name="EditSpecie" Click="EditSpecie_Click"/>
                                 <MenuItem Header="Delete specie" Name="DeleteSpecie" Click="DeleteSpecie_Click"/>
                             </ContextMenu>

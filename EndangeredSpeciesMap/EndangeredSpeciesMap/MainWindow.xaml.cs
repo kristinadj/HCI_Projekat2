@@ -722,5 +722,12 @@ namespace EndangeredSpeciesMap
                 MessageBoxResult success = MessageBox.Show("You have successfully deleted specie!", "Endangered Species", MessageBoxButton.OK);
             }
         }
+
+        private void Details_Click(object sender, RoutedEventArgs e)
+        {
+            Specie selected = (Specie)SpecieList.SelectedItem;
+            DetailsWindow detailsWindow = new DetailsWindow(selected);
+            detailsWindow.Show();
+        }
     }
 }
