@@ -797,6 +797,7 @@ namespace EndangeredSpeciesMap
 
                 return specI.ID.Contains(SearchParam.Text) || specI.Name.Contains(SearchParam.Text);
             };
+
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -842,6 +843,9 @@ namespace EndangeredSpeciesMap
                     }
                 }
 
+            }
+            else {
+                SpecieList.Items.Filter = null;
             }
         }
 
