@@ -163,5 +163,10 @@
   <ItemGroup>
     <Resource Include="addspecies.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="addnewspecies.png" />
+    <Resource Include="gobackbutton.png" />
+    <Resource Include="loadicon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
